@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management - KrishiConnect</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="../images/krishiconnect-logo.png" alt="KrishiConnect Logo" style="height: 30px;">
+                    <span>KrishiConnect</span>
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="farmer-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="farmer-profile.html"><i class="fas fa-user"></i> My Profile</a></li>
+                <li><a href="farmer-inventory.html" class="active"><i class="fas fa-warehouse"></i> Inventory</a></li>
+                <li><a href="farmer-loans.html"><i class="fas fa-hand-holding-usd"></i> Loans</a></li>
+                <li><a href="farmer-sales.html"><i class="fas fa-chart-line"></i> Sales</a></li>
+                <li><a href="farmer-insights.html"><i class="fas fa-lightbulb"></i> Market Insights</a></li>
+                <li><a href="farmer-settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="../index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="dashboard-header">
+                <div>
+                    <h1>Inventory Management</h1>
+                    <p>Manage your product listings and stock levels</p>
+                </div>
+                <div>
+                    <a href="add-product.html" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Product</a>
+                </div>
+            </div>
+
+            <!-- Inventory Summary -->
+            <div class="dashboard-cards">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <p>Total Products</p>
+                            <h3>12</h3>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                    </div>
+                    <p>Active listings</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <p>Low Stock</p>
+                            <h3>4</h3>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                    <p>Need attention</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <p>Total Value</p>
+                            <h3>৳35,750</h3>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                    </div>
+                    <p>Current inventory value</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <p>Best Seller</p>
+                            <h3>Potato</h3>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                    </div>
+                    <p>Highest selling product</p>
+                </div>
+            </div>
+
+            <!-- Filter Options -->
+            <div class="card" style="margin: 2rem 0 1rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category">
+                            <option value="">All Categories</option>
+                            <option value="vegetables">Vegetables</option>
+                            <option value="fruits">Fruits</option>
+                            <option value="grains">Grains</option>
+                            <option value="spices">Spices</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status">
+                            <option value="">All Status</option>
+                            <option value="available">Available</option>
+                            <option value="low_stock">Low Stock</option>
+                            <option value="out_of_stock">Out of Stock</option>
+                            <option value="hidden">Hidden</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="search">Search</label>
+                        <input type="text" id="search" placeholder="Search products...">
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button class="btn btn-primary" style="width: 100%;">Apply Filters</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Inventory Table -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Available Quantity</th>
+                            <th>Min. Order</th>
+                            <th>Harvest Date</th>
+                            <th>Expiry Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="display: flex; align-items: center; gap: 10px;">
+                                <img src="../images/vegetables/potato.jpg" alt="Potato" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                                <div>
+                                    <strong>Potato (Alu)</strong>
+                                    <div style="font-size: 0.8rem; color: var(--gray);">ID: P-1001</div>
+                                </div>
+                            </td>
+                            <td>Vegetables</td>
+                            <td>৳25 per kg</td>
+                            <td>250 kg</td>
+                            <td>5 kg</td>
+                            <td>15 Apr 2023</td>
+                            <td>15 Jul 2023</td>
+                            <td><span style="background-color: var(--secondary-green); color: white; padding: 4px 8px; border-radius: 4px;">Available</span></td>
+                            <td>
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn btn-primary" style="padding: 4px 8px;"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-secondary" style="padding: 4px 8px;"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-secondary" style="padding: 4px 8px;"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="display: flex; align-items: center; gap: 10px;">
+                                <img src="../images/vegetables/tomato.jpg" alt="Tomato" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                                <div>
+                                    <strong>Tomato</strong>
+                                    <div style="font-size: 0.8rem; color: var(--gray);">ID: P-1002</div>
+                                </div>
+                            </td>
+                            <td>Vegetables</td>
+                            <td>৳60 per kg</td>
+                            <td>85 kg</td>
+                            <td>2 kg</td>
+                            <td>2 May 2023</td>
+                            <td>15 May 2023</td>
+                            <td><span style="background-color: var(--secondary-green); color: white; padding: 4px 8px; border-radius: 4px;">Available</span></td>
+                            <td>
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn btn-primary" style="padding: 4px 8px;"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-secondary" style="padding: 4px 8px;"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-secondary" style="padding: 4px 8px;"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="display: flex; align-items: center; gap: 10px;">
+                                <img src="../images/vegetables/brinjal.jpg" alt="Brinjal" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                                <div>
+                                    <strong>Brinjal (Begun)</strong>
+                                    <div style="font-size: 0.8rem; color: var(--gray);">ID: P-1003</div>
+                                </div>
+                            </td>
+                            <td>Vegetables</td>
+                            <td>৳40 per kg</td>
+                            <td>15 kg</td>
+                            <td>2 kg</td>
+                            <td>1 May 2023</td>
+                            <td>10 May 2023</td>
+                            <td><span style="background-color: #ff9800; color: white; padding: 4px 8px; border-radius: 4px;">Low Stock</span></td>
+                            <td>
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn btn-primary" style="padding: 4px 8px;"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-secondary" style="padding: 4px 8px;"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-secondary" style="padding: 4px 8px;"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="display: flex; align-items: center; gap: 10px;">
+                                <img src="../images/vegetables/cauliflower.jpg" alt="Cauliflower" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                                <div>
+                                    <strong>Cauliflower (Phulkopi)</strong>
+                                    <div style="font-size: 0.8rem; color: var(--gray);">ID: P-1004</div>
+                                </div>
+                            </td>
+                            <td>Vegetables</td>
+                            <td>৳45 per piece</td>
+                            <td>30 pieces</td>
+                            <td>5 pieces</td>
+                            <td>28 Apr 2023</td>
+                            <td>10 May 2023</td>
+                            <td><span style="background-color: var(--secondary-green); color: white; padding: 4px 8px; border-radius: 4px;">Available</span></td>
+                            <td>
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn btn-primary" style="padding: 4px 8px;"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-secondary" style="padding: 4px 8px;"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-secondary" style="padding: 4px 8px;"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="display: flex; align-items: center; gap: 10px;">
+                                <img src="../images/vegetables/spinach.jpg" alt="Spinach" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                                <div>
+                                    <strong>Spinach (Palong Shak)</strong>
+                                    <div style="font-size: 0.8rem; color: var(--gray);">ID: P-1005</div>
+                                </div>
+                            </td>
+                            <td>Vegetables</td>
+                            <td>৳30 per bundle</td>
+                            <td>12 bundles</td>
+                            <td>2 bundles</td>
+                            <td>5 May 2023</td>
+                            <td>8 May 2023</td>
+                            <td><span style="background-color: #ff9800; color: white; padding: 4px 8px; border-radius: 4px;">Low Stock</span></td>
+                            <td>
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn btn-primary" style="padding: 4px 8px;"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-secondary" style="padding: 4px 8px;"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-secondary" style="padding: 4px 8px;"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+                <div>
+                    <span>Showing 1 to 5 of 12 entries</span>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <a href="#" class="btn btn-secondary" style="padding: 0.5rem 1rem;"><i class="fas fa-chevron-left"></i></a>
+                    <a href="#" class="btn btn-primary" style="padding: 0.5rem 1rem;">1</a>
+                    <a href="#" class="btn btn-secondary" style="padding: 0.5rem 1rem;">2</a>
+                    <a href="#" class="btn btn-secondary" style="padding: 0.5rem 1rem;">3</a>
+                    <a href="#" class="btn btn-secondary" style="padding: 0.5rem 1rem;"><i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Quick Update Form -->
+            <div class="card" style="margin-top: 2rem;">
+                <h2 style="margin-bottom: 1.5rem;">Quick Stock Update</h2>
+                <form style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                    <div class="form-group">
+                        <label for="quick-product">Select Product</label>
+                        <select id="quick-product">
+                            <option value="">Choose a product</option>
+                            <option value="1001">Potato (Alu)</option>
+                            <option value="1002">Tomato</option>
+                            <option value="1003">Brinjal (Begun)</option>
+                            <option value="1004">Cauliflower (Phulkopi)</option>
+                            <option value="1005">Spinach (Palong Shak)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quick-quantity">New Quantity</label>
+                        <input type="number" id="quick-quantity" placeholder="Enter quantity">
+                    </div>
+                    <div class="form-group">
+                        <label for="quick-price">New Price (optional)</label>
+                        <input type="number" id="quick-price" placeholder="Enter new price">
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button class="btn btn-primary" style="width: 100%;">Update Stock</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

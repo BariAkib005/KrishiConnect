@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register — KrishiConnect</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="auth-page">
+    <div class="auth-left">
+        <a href="../index.html" class="logo" style="margin-bottom:3rem">
+            <img src="../images/krishiconnect-logo.png" alt="KrishiConnect" style="filter:brightness(0) invert(1);height:32px">
+            <span>KrishiConnect</span>
+        </a>
+        <h1>Join <span style="color:var(--gold)">KrishiConnect</span> Today</h1>
+        <p>Create your account and start connecting with farmers, buyers, and financial opportunities across Bangladesh.</p>
+        <ul style="margin-top:2rem;display:flex;flex-direction:column;gap:1rem;position:relative;z-index:1">
+            <li style="display:flex;align-items:center;gap:12px"><i class="fas fa-check-circle" style="color:var(--gold);font-size:1.2rem"></i> Free registration for all users</li>
+            <li style="display:flex;align-items:center;gap:12px"><i class="fas fa-check-circle" style="color:var(--gold);font-size:1.2rem"></i> Access to 50+ districts marketplace</li>
+            <li style="display:flex;align-items:center;gap:12px"><i class="fas fa-check-circle" style="color:var(--gold);font-size:1.2rem"></i> Microfinance loans from ৳10,000</li>
+            <li style="display:flex;align-items:center;gap:12px"><i class="fas fa-check-circle" style="color:var(--gold);font-size:1.2rem"></i> Real-time market price insights</li>
+        </ul>
+    </div>
+
+    <div class="auth-right" style="overflow-y:auto">
+        <div class="auth-form" style="max-width:500px">
+            <h2>Create Account</h2>
+            <p class="subtitle">Fill in your details to get started</p>
+
+            <div class="role-selector">
+                <div class="role-btn active"><i class="fas fa-seedling"></i> Farmer</div>
+                <div class="role-btn"><i class="fas fa-shopping-bag"></i> Buyer</div>
+            </div>
+
+            <form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-fname">First Name</label>
+                        <input type="text" id="reg-fname" placeholder="First name">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-lname">Last Name</label>
+                        <input type="text" id="reg-lname" placeholder="Last name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email Address</label>
+                    <input type="email" id="reg-email" placeholder="you@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="reg-phone">Phone Number</label>
+                    <input type="tel" id="reg-phone" placeholder="+880 1XXX-XXXXXX">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-district">District</label>
+                        <select id="reg-district">
+                            <option value="">Select District</option>
+                            <option>Dhaka</option><option>Chittagong</option><option>Khulna</option>
+                            <option>Rangpur</option><option>Sylhet</option><option>Rajshahi</option>
+                            <option>Barisal</option><option>Mymensingh</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-upazila">Upazila</label>
+                        <input type="text" id="reg-upazila" placeholder="Enter upazila">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-pass">Password</label>
+                        <input type="password" id="reg-pass" placeholder="Min 8 characters">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-confirm">Confirm Password</label>
+                        <input type="password" id="reg-confirm" placeholder="Re-enter password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox"> I agree to the <a href="#" style="color:var(--emerald);font-weight:600">Terms of Service</a> and <a href="#" style="color:var(--emerald);font-weight:600">Privacy Policy</a>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" style="padding:14px">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+
+            <div class="divider">or sign up with</div>
+            <div style="display:flex;gap:.75rem">
+                <button class="btn btn-outline btn-block btn-sm"><i class="fab fa-google"></i> Google</button>
+                <button class="btn btn-outline btn-block btn-sm"><i class="fab fa-facebook-f"></i> Facebook</button>
+            </div>
+            <p class="auth-footer">Already have an account? <a href="login.html">Sign in</a></p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

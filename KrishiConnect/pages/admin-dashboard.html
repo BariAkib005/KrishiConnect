@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - KrishiConnect</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="../images/krishiconnect-logo.png" alt="KrishiConnect Logo" style="height: 30px;">
+                    <span>KrishiConnect</span>
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="admin-dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="admin-users.html"><i class="fas fa-users"></i> User Management</a></li>
+                <li><a href="admin-loans.html"><i class="fas fa-hand-holding-usd"></i> Loan Management</a></li>
+                <li><a href="admin-marketplace.html"><i class="fas fa-store"></i> Marketplace</a></li>
+                <li><a href="admin-transactions.html"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+                <li><a href="admin-reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="admin-settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="../index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="dashboard-header">
+                <div>
+                    <h1>Admin Dashboard</h1>
+                    <p>Overview of system performance and management</p>
+                </div>
+                <div class="user-info">
+                    <span>Admin: Mohammed Khalid | Last login: Today at 8:30 AM</span>
+                </div>
+            </div>
+
+            <!-- Dashboard Cards -->
+            <div class="dashboard-cards">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <p>Total Users</p>
+                            <h3>6,548</h3>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <p>↑ 125 (past 30 days)</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <p>Active Loans</p>
+                            <h3>842</h3>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                    </div>
+                    <p>৳12.5M disbursed</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <p>Total Revenue</p>
+                            <h3>৳845,250</h3>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <p>↑ 8.5% from last month</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <p>Marketplace Items</p>
+                            <h3>1,245</h3>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-shopping-basket"></i>
+                        </div>
+                    </div>
+                    <p>85 new listings today</p>
+                </div>
+            </div>
+
+            <!-- Loan Approval Queue -->
+            <h2 style="margin: 2rem 0 1rem;">Pending Loan Approvals</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Farmer Name</th>
+                            <th>Location</th>
+                            <th>Loan Type</th>
+                            <th>Amount</th>
+                            <th>Purpose</th>
+                            <th>Credit Score</th>
+                            <th>Applied Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#L-9856</td>
+                            <td>Aminul Islam</td>
+                            <td>Dinajpur</td>
+                            <td>Seed Capital</td>
+                            <td>৳25,000</td>
+                            <td>Rice cultivation</td>
+                            <td>4.2/5</td>
+                            <td>18 May 2023</td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-primary" style="padding: 4px 8px;">Approve</button>
+                                    <button class="btn btn-secondary" style="padding: 4px 8px;">Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#L-9851</td>
+                            <td>Sahana Begum</td>
+                            <td>Sylhet</td>
+                            <td>Equipment</td>
+                            <td>৳85,000</td>
+                            <td>Irrigation pump</td>
+                            <td>3.8/5</td>
+                            <td>17 May 2023</td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-primary" style="padding: 4px 8px;">Approve</button>
+                                    <button class="btn btn-secondary" style="padding: 4px 8px;">Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#L-9845</td>
+                            <td>Farhad Khan</td>
+                            <td>Rajshahi</td>
+                            <td>Land Development</td>
+                            <td>৳150,000</td>
+                            <td>Irrigation system</td>
+                            <td>4.7/5</td>
+                            <td>16 May 2023</td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-primary" style="padding: 4px 8px;">Approve</button>
+                                    <button class="btn btn-secondary" style="padding: 4px 8px;">Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#L-9832</td>
+                            <td>Nasrin Jahan</td>
+                            <td>Khulna</td>
+                            <td>Seed Capital</td>
+                            <td>৳35,000</td>
+                            <td>Vegetable farming</td>
+                            <td>4.0/5</td>
+                            <td>15 May 2023</td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-primary" style="padding: 4px 8px;">Approve</button>
+                                    <button class="btn btn-secondary" style="padding: 4px 8px;">Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align: right; margin-top: 1rem;">
+                <a href="admin-loans.html" class="btn btn-primary">View All Loans</a>
+            </div>
+
+            <!-- Recent Platform Activities -->
+            <h2 style="margin: 2rem 0 1rem;">Recent Activities</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>User</th>
+                            <th>Type</th>
+                            <th>Activity</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Today 10:45 AM</td>
+                            <td>Abdul Rahman</td>
+                            <td>Farmer</td>
+                            <td>New Listing</td>
+                            <td>Added 100kg of potatoes at ৳25/kg</td>
+                        </tr>
+                        <tr>
+                            <td>Today 10:30 AM</td>
+                            <td>Fatima Begum</td>
+                            <td>Buyer</td>
+                            <td>New Order</td>
+                            <td>Purchased ৳1,850 worth of vegetables</td>
+                        </tr>
+                        <tr>
+                            <td>Today 9:15 AM</td>
+                            <td>Karim Miah</td>
+                            <td>Farmer</td>
+                            <td>Loan Payment</td>
+                            <td>Paid ৳5,000 towards loan #L-7564</td>
+                        </tr>
+                        <tr>
+                            <td>Today 8:50 AM</td>
+                            <td>Selim Ahmed</td>
+                            <td>Farmer</td>
+                            <td>Registration</td>
+                            <td>New farmer from Barisal district</td>
+                        </tr>
+                        <tr>
+                            <td>Yesterday 4:30 PM</td>
+                            <td>Organic Foods Ltd</td>
+                            <td>Buyer</td>
+                            <td>Registration</td>
+                            <td>New business buyer from Dhaka</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align: right; margin-top: 1rem;">
+                <a href="admin-activities.html" class="btn btn-primary">View All Activities</a>
+            </div>
+
+            <!-- Analytics Summary -->
+            <h2 style="margin: 2rem 0 1rem;">Analytics Overview</h2>
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3 style="margin-bottom: 1rem;">User Growth</h3>
+                    <img src="../images/admin/user-growth-chart.png" alt="User Growth Chart" style="width: 100%;">
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 1rem;">Revenue Trends</h3>
+                    <img src="../images/admin/revenue-trends-chart.png" alt="Revenue Trends Chart" style="width: 100%;">
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 1rem;">Loan Distribution</h3>
+                    <img src="../images/admin/loan-distribution-chart.png" alt="Loan Distribution Chart" style="width: 100%;">
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 1rem;">Product Categories</h3>
+                    <img src="../images/admin/product-categories-chart.png" alt="Product Categories Chart" style="width: 100%;">
+                </div>
+            </div>
+            <div style="text-align: right; margin-top: 1rem;">
+                <a href="admin-reports.html" class="btn btn-primary">View Detailed Reports</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

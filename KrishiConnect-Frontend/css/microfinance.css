@@ -1,0 +1,46 @@
+/* ============================================
+   KrishiConnect — Microfinance Page Styles
+   ============================================ */
+
+/* Hero (smaller variant) */
+.hero{position:relative;min-height:45vh;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--white);overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,77,42,.85),rgba(13,27,42,.7))}
+.hero-content{position:relative;z-index:2;max-width:800px;padding:2rem;animation:fadeInUp .8s ease}
+.hero h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem;letter-spacing:-1px}
+.hero h1 span{color:var(--gold)}
+.hero p{font-size:clamp(1rem,2vw,1.15rem);opacity:.9;margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
+.hero .btn-group{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+
+/* Steps */
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;counter-reset:step}
+.step-card{text-align:center;padding:2rem;position:relative}
+.step-card::before{counter-increment:step;content:counter(step);width:60px;height:60px;background:linear-gradient(135deg,var(--emerald),var(--emerald-light));color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;margin:0 auto 1.25rem;font-family:'Inter',sans-serif;box-shadow:0 6px 20px rgba(26,107,60,.3)}
+.step-card h3{margin-bottom:.5rem;font-size:1.05rem}
+.step-card p{color:var(--gray);font-size:.9rem}
+
+/* Loan Cards */
+.loan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}
+.loan-card{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,.04);background:var(--white);transition:var(--transition)}
+.loan-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-xl)}
+.loan-card .top{background:linear-gradient(135deg,var(--emerald),var(--emerald-light));color:var(--white);padding:2rem;text-align:center}
+.loan-card .top h3{font-size:1.15rem;margin-bottom:.5rem}
+.loan-card .top .amount{font-size:1.8rem;font-weight:800;margin:.5rem 0}
+.loan-card .top p{opacity:.85;font-size:.9rem}
+.loan-card .bottom{padding:2rem}
+.loan-card .bottom li{padding:.6rem 0;display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--slate)}
+.loan-card .bottom li i{color:var(--emerald);font-size:.8rem}
+
+/* Credit Score Section */
+.credit-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.credit-list li{padding:.7rem 0;display:flex;align-items:flex-start;gap:12px;font-size:.95rem}
+.credit-list li i{color:var(--emerald);margin-top:4px}
+
+/* Stats bar (reused from home) */
+.stats-section{background:linear-gradient(135deg,var(--emerald-dark),var(--navy));color:var(--white);padding:4rem 0}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;text-align:center}
+.stat-item h3{font-size:2.8rem;font-weight:800;margin-bottom:.25rem}
+.stat-item h3 span{color:var(--gold)}
+.stat-item p{opacity:.8;font-size:1rem}
+
+@media(max-width:1024px){.credit-grid{grid-template-columns:1fr}}

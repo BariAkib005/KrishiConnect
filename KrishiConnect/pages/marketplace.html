@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace - KrishiConnect</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container navbar">
+            <div class="logo">
+                <img src="../images/krishiconnect-logo.png" alt="KrishiConnect Logo">
+                <span>KrishiConnect</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="marketplace.html" class="active">Marketplace</a></li>
+                <li><a href="microfinance.html">Microfinance</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" class="btn btn-primary">Login/Register</a></li>
+            </ul>
+            <button class="language-switch">বাংলা</button>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Marketplace Hero -->
+    <section class="hero" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/marketplace-hero.jpg'); padding: 4rem 0;">
+        <div class="container hero-content">
+            <h1>Fresh Produce Direct from Farmers</h1>
+            <p>Browse our selection of seasonal vegetables, fruits, and other agricultural products from farmers across Bangladesh.</p>
+            <div class="btn-group">
+                <a href="#products" class="btn btn-primary">Shop Now</a>
+                <a href="buyer-register.html" class="btn btn-secondary">Register as Buyer</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="section" style="padding-bottom: 0;">
+        <div class="container">
+            <div class="card">
+                <h2 style="margin-bottom: 1.5rem;">Filter Products</h2>
+                <form style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category">
+                            <option value="">All Categories</option>
+                            <option value="vegetables">Vegetables</option>
+                            <option value="fruits">Fruits</option>
+                            <option value="grains">Grains</option>
+                            <option value="spices">Spices</option>
+                            <option value="other">Other Products</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="district">District</label>
+                        <select id="district" name="district">
+                            <option value="">All Districts</option>
+                            <option value="dhaka">Dhaka</option>
+                            <option value="chittagong">Chittagong</option>
+                            <option value="khulna">Khulna</option>
+                            <option value="rangpur">Rangpur</option>
+                            <option value="sylhet">Sylhet</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="season">Season</label>
+                        <select id="season" name="season">
+                            <option value="">All Seasons</option>
+                            <option value="summer">Summer</option>
+                            <option value="monsoon">Monsoon</option>
+                            <option value="winter">Winter</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price Range</label>
+                        <select id="price" name="price">
+                            <option value="">All Prices</option>
+                            <option value="0-50">৳0 - ৳50</option>
+                            <option value="50-100">৳50 - ৳100</option>
+                            <option value="100-200">৳100 - ৳200</option>
+                            <option value="200+">৳200+</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Apply Filters</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Available Products</h2>
+                <p>Fresh seasonal produce direct from local farmers</p>
+            </div>
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <img src="../images/vegetables/brinjal.jpg" alt="Brinjal">
+                    <div class="product-details">
+                        <h3>Brinjal (Begun)</h3>
+                        <p>Fresh organic brinjal from Rangpur region.</p>
+                        <div class="product-meta">
+                            <div class="product-price">৳40 per kg</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>(4.5)</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <button class="btn btn-primary" style="flex: 1;">Add to Cart</button>
+                            <button class="btn btn-secondary" style="flex: 1;">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <img src="../images/vegetables/tomato.jpg" alt="Tomato">
+                    <div class="product-details">
+                        <h3>Tomato</h3>
+                        <p>Organic tomatoes from Gazipur farms.</p>
+                        <div class="product-meta">
+                            <div class="product-price">৳60 per kg</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>(4.0)</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <button class="btn btn-primary" style="flex: 1;">Add to Cart</button>
+                            <button class="btn btn-secondary" style="flex: 1;">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <img src="../images/vegetables/potato.jpg" alt="Potato">
+                    <div class="product-details">
+                        <h3>Potato (Alu)</h3>
+                        <p>Premium quality potatoes from Munshiganj.</p>
+                        <div class="product-meta">
+                            <div class="product-price">৳25 per kg</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(5.0)</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <button class="btn btn-primary" style="flex: 1;">Add to Cart</button>
+                            <button class="btn btn-secondary" style="flex: 1;">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <img src="../images/vegetables/cauliflower.jpg" alt="Cauliflower">
+                    <div class="product-details">
+                        <h3>Cauliflower (Phulkopi)</h3>
+                        <p>Fresh cauliflower from Bogra farms.</p>
+                        <div class="product-meta">
+                            <div class="product-price">৳45 per piece</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>(4.0)</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <button class="btn btn-primary" style="flex: 1;">Add to Cart</button>
+                            <button class="btn btn-secondary" style="flex: 1;">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <img src="../images/vegetables/spinach.jpg" alt="Spinach">
+                    <div class="product-details">
+                        <h3>Spinach (Palong Shak)</h3>
+                        <p>Nutrient-rich spinach from Narsingdi.</p>
+                        <div class="product-meta">
+                            <div class="product-price">৳30 per bundle</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
+                                <span>(3.5)</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <button class="btn btn-primary" style="flex: 1;">Add to Cart</button>
+                            <button class="btn btn-secondary" style="flex: 1;">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <img src="../images/vegetables/okra.jpg" alt="Okra">
+                    <div class="product-details">
+                        <h3>Okra (Dherosh)</h3>
+                        <p>Fresh okra from Jessore farms.</p>
+                        <div class="product-meta">
+                            <div class="product-price">৳50 per kg</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>(4.0)</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <button class="btn btn-primary" style="flex: 1;">Add to Cart</button>
+                            <button class="btn btn-secondary" style="flex: 1;">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div style="display: flex; justify-content: center; margin-top: 3rem;">
+                <div style="display: flex; gap: 0.5rem;">
+                    <a href="#" class="btn btn-secondary" style="padding: 0.5rem 1rem;"><i class="fas fa-chevron-left"></i></a>
+                    <a href="#" class="btn btn-primary" style="padding: 0.5rem 1rem;">1</a>
+                    <a href="#" class="btn btn-secondary" style="padding: 0.5rem 1rem;">2</a>
+                    <a href="#" class="btn btn-secondary" style="padding: 0.5rem 1rem;">3</a>
+                    <a href="#" class="btn btn-secondary" style="padding: 0.5rem 1rem;">4</a>
+                    <a href="#" class="btn btn-secondary" style="padding: 0.5rem 1rem;"><i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>KrishiConnect</h3>
+                    <p>Empowering Bangladeshi farmers through direct market access and financial inclusion.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="marketplace.html">Marketplace</a></li>
+                        <li><a href="microfinance.html">Microfinance</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>For Farmers</h3>
+                    <ul>
+                        <li><a href="farmer-register.html">Register as Farmer</a></li>
+                        <li><a href="farmer-dashboard.html">Farmer Dashboard</a></li>
+                        <li><a href="loan-application.html">Apply for Loan</a></li>
+                        <li><a href="agriculture-tips.html">Farming Tips</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>For Buyers</h3>
+                    <ul>
+                        <li><a href="buyer-register.html">Register as Buyer</a></li>
+                        <li><a href="buyer-dashboard.html">Buyer Dashboard</a></li>
+                        <li><a href="order-tracking.html">Track Orders</a></li>
+                        <li><a href="direct-sourcing.html">Direct Sourcing</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 KrishiConnect. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

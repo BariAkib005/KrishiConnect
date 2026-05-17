@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KrishiConnect Database Queries</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            font-family: 'Poppins', sans-serif;
+        }
+        h1 {
+            color: var(--primary-green);
+            margin-bottom: 2rem;
+        }
+        h2 {
+            color: var(--dark-green);
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-green);
+        }
+        h3 {
+            color: var(--primary-green);
+            margin: 1.5rem 0 0.5rem;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            border-radius: 5px;
+            display: block;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: monospace;
+            white-space: pre;
+        }
+        .note {
+            background-color: var(--light-yellow);
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>KrishiConnect Database Queries</h1>
+    
+    <div class="note">
+        <p>This document outlines the key SQL queries required for the KrishiConnect platform. These queries support core system functionality including user management, marketplace operations, microfinance processing, and data analysis.</p>
+    </div>
+
+    <h2>User Management Queries</h2>
+
+    <h3>1. User Registration</h3>
+    <code>
+-- Register a new farmer user
+INSERT INTO users (username, password, email, phone_number, full_name, user_type, address, district, language_preference)
+VALUES ('farmer1', 'hashed_password', 'farmer1@example.com', '01712345678', 'Abdul Rahman', 'farmer', 'Village: Borobari, Upazila: Pirganj', 'Rangpur', 'bengali');
+
+-- Get the inserted user's ID
+SET @user_id = LAST_INSERT_ID();
+
+-- Create the corresponding farmer profile
+INSERT INTO farmer_profiles (farmer_id, user_id, land_size, land_unit, farming_experience, main_crops, cultivation_method)
+VALUES (@user_id, @user_id, 2.5, 'acre', 15, 'Rice, Potato, Brinjal', 'traditional');
+</code>
+
+    <h3>2. User Authentication</h3>
+    <code>
+-- Check credentials for user login
+SELECT user_id, user_type, full_name, verification_status, language_preference 
+FROM users 
+WHERE (username = ? OR email = ? OR phone_number = ?) 
+AND password = ? 
+AND is_active = TRUE;
+
+-- Update last login timestamp
+UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE user_id = ?;
+</code>
+
+    <h3>3. User Profile Retrieval</h3>
+    <code>
+-- Get farmer profile with user details
+SELECT u.user_id, u.username, u.email, u.phone_number, u.full_name, u.address, u.district, 
+       u.registration_date, u.language_preference, fp.farmer_id, fp.land_size, fp.land_unit, 
+       fp.farming_experience, fp.main_crops, fp.cultivation_method, fp.credit_score
+FROM users u
+JOIN farmer_profiles fp ON u.user_id = fp.user_id
+WHERE u.user_id = ?;
+
+-- Get buyer profile with user details
+SELECT u.user_id, u.username, u.email, u.phone_number, u.full_name, u.address, u.district, 
+       u.registration_date, u.language_preference, bp.buyer_id, bp.buyer_type, bp.business_name, 
+       bp.purchase_volume, bp.preferred_payment_method
+FROM users u
+JOIN buyer_profiles bp ON u.user_id = bp.user_id
+WHERE u.user_id = ?;
+</code>
+
+    <h3>4. Update User Profile</h3>
+    <code>
+-- Update user basic information
+UPDATE users 
+SET full_name = ?, phone_number = ?, email = ?, address = ?, district = ?, language_preference = ?
+WHERE user_id = ?;
+
+-- Update farmer specific information
+UPDATE farmer_profiles
+SET land_size = ?, land_unit = ?, farming_experience = ?, main_crops = ?, cultivation_method = ?
+WHERE farmer_id = ?;
+</code>
+
+    <h2>Marketplace Queries</h2>
+
+    <h3>1. Product Listing</h3>
+    <code>
+-- Add a new product listing
+INSERT INTO products (farmer_id, category_id, product_name, bengali_name, description, 
+                     price_per_unit, unit, quantity_available, min_order_quantity, 
+                     harvest_date, expiry_date, product_image, is_organic, seasonal_availability)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+</code>
+
+    <h3>2. Product Search and Filtering</h3>
+    <code>
+-- Search products with various filters
+SELECT p.product_id, p.product_name, p.bengali_name, p.description, p.price_per_unit, p.unit, 
+       p.quantity_available, p.harvest_date, p.expiry_date, p.product_image, p.is_organic, 
+       p.seasonal_availability, pc.category_name, u.full_name as farmer_name, u.district as farmer_district,
+       fp.credit_score as farmer_rating
+FROM products p
+JOIN product_categories pc ON p.category_id = pc.category_id
+JOIN farmer_profiles fp ON p.farmer_id = fp.farmer_id
+JOIN users u ON fp.user_id = u.user_id
+WHERE p.status = 'available'
+AND p.quantity_available > 0
+AND (p.category_id = ? OR ? IS NULL)  -- Category filter
+AND (u.district = ? OR ? IS NULL)     -- Location filter
+AND (p.seasonal_availability = ? OR ? IS NULL) -- Season filter
+AND (p.price_per_unit BETWEEN ? AND ? OR ? IS NULL OR ? IS NULL) -- Price range filter
+AND (p.product_name LIKE CONCAT('%', ?, '%') OR p.bengali_name LIKE CONCAT('%', ?, '%') OR ? IS NULL) -- Keyword search
+ORDER BY p.created_at DESC
+LIMIT ?, ?; -- For pagination
+</code>
+
+    <h3>3. Creating an Order</h3>
+    <code>
+-- Begin transaction
+START TRANSACTION;
+
+-- Create order header
+INSERT INTO orders (buyer_id, total_amount, payment_method, shipping_address, contact_number, delivery_date, special_instructions)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+-- Get the inserted order ID
+SET @order_id = LAST_INSERT_ID();
+
+-- Add order items
+INSERT INTO order_items (order_id, product_id, farmer_id, quantity, unit_price, total_price)
+VALUES (@order_id, ?, ?, ?, ?, ?);
+
+-- Update product quantities
+UPDATE products 
+SET quantity_available = quantity_available - ?, 
+    status = CASE WHEN (quantity_available - ?) <= min_order_quantity THEN 'low_stock' 
+                 WHEN (quantity_available - ?) <= 0 THEN 'out_of_stock' 
+                 ELSE status END
+WHERE product_id = ?;
+
+-- Record transaction
+INSERT INTO transactions (transaction_type, amount, user_id, related_id, payment_method, description)
+VALUES ('order_payment', ?, ?, @order_id, ?, CONCAT('Payment for order #', @order_id));
+
+-- Commit transaction
+COMMIT;
+</code>
+
+    <h3>4. Order Tracking and History</h3>
+    <code>
+-- Get buyer's order history
+SELECT o.order_id, o.order_date, o.total_amount, o.status, o.payment_status, 
+       o.payment_method, o.delivery_date, COUNT(oi.item_id) as total_items
+FROM orders o
+JOIN order_items oi ON o.order_id = oi.order_id
+WHERE o.buyer_id = ?
+GROUP BY o.order_id
+ORDER BY o.order_date DESC
+LIMIT ?, ?;
+
+-- Get detailed order information
+SELECT o.order_id, o.order_date, o.total_amount, o.status, o.payment_status, 
+       o.payment_method, o.shipping_address, o.contact_number, o.delivery_date, 
+       o.special_instructions, oi.item_id, oi.product_id, oi.farmer_id, 
+       oi.quantity, oi.unit_price, oi.total_price, oi.status as item_status,
+       p.product_name, p.bengali_name, p.unit, p.product_image,
+       u.full_name as farmer_name, u.district as farmer_district
+FROM orders o
+JOIN order_items oi ON o.order_id = oi.order_id
+JOIN products p ON oi.product_id = p.product_id
+JOIN farmer_profiles fp ON oi.farmer_id = fp.farmer_id
+JOIN users u ON fp.user_id = u.user_id
+WHERE o.order_id = ?;
+</code>
+
+    <h3>5. Product Rating and Reviews</h3>
+    <code>
+-- Add a product review
+INSERT INTO ratings (buyer_id, farmer_id, product_id, order_id, rating, review)
+VALUES (?, ?, ?, ?, ?, ?);
+
+-- Get product reviews
+SELECT r.rating_id, r.rating, r.review, r.review_date, 
+       u.full_name as buyer_name, u.district as buyer_district
+FROM ratings r
+JOIN buyer_profiles bp ON r.buyer_id = bp.buyer_id
+JOIN users u ON bp.user_id = u.user_id
+WHERE r.product_id = ? AND r.is_public = TRUE
+ORDER BY r.review_date DESC
+LIMIT ?, ?;
+
+-- Calculate average product rating
+SELECT AVG(rating) as average_rating, COUNT(*) as total_reviews
+FROM ratings
+WHERE product_id = ? AND is_public = TRUE;
+</code>
+
+    <h2>Microfinance Queries</h2>
+
+    <h3>1. Loan Application</h3>
+    <code>
+-- Insert new loan application
+INSERT INTO loans (farmer_id, loan_type_id, amount, purpose, interest_rate, term_months, 
+                   monthly_payment, bank_account_number, bank_name)
+VALUES (?, ?, ?, ?, 
+        (SELECT interest_rate FROM loan_types WHERE loan_type_id = ?), 
+        (SELECT term_months FROM loan_types WHERE loan_type_id = ?),
+        (? * (1 + (SELECT interest_rate FROM loan_types WHERE loan_type_id = ?) / 100) / 
+         (SELECT term_months FROM loan_types WHERE loan_type_id = ?)),
+        ?, ?);
+</code>
+
+    <h3>2. Loan Approval Process</h3>
+    <code>
+-- Get pending loan applications for admin review
+SELECT l.loan_id, l.farmer_id, l.loan_type_id, l.amount, l.purpose, l.interest_rate, 
+       l.term_months, l.monthly_payment, l.application_date, l.status,
+       lt.loan_name, u.full_name as farmer_name, u.district,
+       fp.land_size, fp.land_unit, fp.credit_score
+FROM loans l
+JOIN loan_types lt ON l.loan_type_id = lt.loan_type_id
+JOIN farmer_profiles fp ON l.farmer_id = fp.farmer_id
+JOIN users u ON fp.user_id = u.user_id
+WHERE l.status = 'applied'
+ORDER BY l.application_date ASC;
+
+-- Approve a loan application
+UPDATE loans
+SET status = 'approved', approved_by = ?, disbursement_date = DATE_ADD(CURRENT_DATE, INTERVAL 3 DAY),
+    end_date = DATE_ADD(DATE_ADD(CURRENT_DATE, INTERVAL 3 DAY), INTERVAL term_months MONTH)
+WHERE loan_id = ?;
+
+-- Reject a loan application
+UPDATE loans
+SET status = 'rejected', rejection_reason = ?
+WHERE loan_id = ?;
+</code>
+
+    <h3>3. Loan Disbursement</h3>
+    <code>
+-- Process loan disbursement
+START TRANSACTION;
+
+-- Update loan status
+UPDATE loans
+SET status = 'disbursed'
+WHERE loan_id = ? AND status = 'approved';
+
+-- Record transaction
+INSERT INTO transactions (transaction_type, amount, user_id, related_id, payment_method, description)
+VALUES ('loan_disbursement', 
+        (SELECT amount FROM loans WHERE loan_id = ?), 
+        (SELECT fp.user_id FROM loans l JOIN farmer_profiles fp ON l.farmer_id = fp.farmer_id WHERE l.loan_id = ?), 
+        ?, 'bank_transfer', CONCAT('Loan disbursement for loan #', ?));
+
+COMMIT;
+</code>
+
+    <h3>4. Loan Repayment</h3>
+    <code>
+-- Record loan payment
+START TRANSACTION;
+
+-- Insert payment record
+INSERT INTO loan_payments (loan_id, amount, payment_method, transaction_id, notes, recorded_by)
+VALUES (?, ?, ?, ?, ?, ?);
+
+-- Check if loan is fully paid
+SET @total_paid = (SELECT SUM(amount) FROM loan_payments WHERE loan_id = ? AND payment_status = 'completed');
+SET @loan_amount = (SELECT amount * (1 + interest_rate/100) FROM loans WHERE loan_id = ?);
+
+-- Update loan status if fully paid
+UPDATE loans
+SET status = IF(@total_paid >= @loan_amount, 'paid', 'active')
+WHERE loan_id = ?;
+
+-- Record transaction
+INSERT INTO transactions (transaction_type, amount, user_id, related_id, payment_method, description)
+VALUES ('loan_payment', ?, 
+        (SELECT fp.user_id FROM loans l JOIN farmer_profiles fp ON l.farmer_id = fp.farmer_id WHERE l.loan_id = ?), 
+        ?, ?, CONCAT('Loan payment for loan #', ?));
+
+COMMIT;
+</code>
+
+    <h3>5. Credit Score Calculation</h3>
+    <code>
+-- Update farmer's credit score based on loan repayment history
+UPDATE farmer_profiles fp
+SET credit_score = (
+    SELECT 
+        CASE 
+            WHEN COUNT(l.loan_id) = 0 THEN 3.0 -- Default score for new farmers
+            ELSE
+                LEAST(5.0, -- Maximum score is 5.0
+                    GREATEST(1.0, -- Minimum score is 1.0
+                        3.0 + -- Base score
+                        -- Add points for paid loans
+                        (COUNT(CASE WHEN l.status = 'paid' THEN 1 END) * 0.5) +
+                        -- Subtract points for defaulted loans
+                        (COUNT(CASE WHEN l.status = 'defaulted' THEN 1 END) * -1.0) +
+                        -- Add points for on-time payments
+                        (COUNT(lp.payment_id) / 
+                         GREATEST(1, (SELECT SUM(term_months) FROM loans WHERE farmer_id = fp.farmer_id)) * 0.3) +
+                        -- Add points for marketplace activity
+                        (SELECT COUNT(*) / 10 FROM orders o 
+                         JOIN order_items oi ON o.order_id = oi.order_id 
+                         WHERE oi.farmer_id = fp.farmer_id AND o.status = 'delivered') * 0.2
+                    )
+                )
+        END
+    FROM loans l
+    LEFT JOIN loan_payments lp ON l.loan_id = lp.loan_id AND lp.payment_status = 'completed'
+    WHERE l.farmer_id = fp.farmer_id
+    GROUP BY l.farmer_id
+)
+WHERE farmer_id = ?;
+</code>
+
+    <h2>Analytics and Reporting Queries</h2>
+
+    <h3>1. Sales Analytics</h3>
+    <code>
+-- Get sales overview for farmer
+SELECT 
+    DATE_FORMAT(o.order_date, '%Y-%m') as month,
+    SUM(oi.total_price) as monthly_sales,
+    COUNT(DISTINCT o.order_id) as order_count,
+    SUM(oi.quantity) as total_quantity,
+    AVG(oi.unit_price) as average_unit_price
+FROM order_items oi
+JOIN orders o ON oi.order_id = o.order_id
+WHERE oi.farmer_id = ?
+AND o.order_date BETWEEN ? AND ?
+GROUP BY DATE_FORMAT(o.order_date, '%Y-%m')
+ORDER BY month;
+
+-- Get product performance for farmer
+SELECT 
+    p.product_id,
+    p.product_name,
+    p.bengali_name,
+    SUM(oi.quantity) as total_quantity_sold,
+    SUM(oi.total_price) as total_revenue,
+    COUNT(DISTINCT o.order_id) as order_count,
+    AVG(r.rating) as average_rating
+FROM products p
+LEFT JOIN order_items oi ON p.product_id = oi.product_id
+LEFT JOIN orders o ON oi.order_id = o.order_id
+LEFT JOIN ratings r ON p.product_id = r.product_id
+WHERE p.farmer_id = ?
+AND (o.order_date IS NULL OR o.order_date BETWEEN ? AND ?)
+GROUP BY p.product_id, p.product_name, p.bengali_name
+ORDER BY total_revenue DESC;
+</code>
+
+    <h3>2. Loan Performance</h3>
+    <code>
+-- Get loan disbursement and repayment statistics
+SELECT 
+    DATE_FORMAT(l.disbursement_date, '%Y-%m') as month,
+    lt.loan_name,
+    COUNT(l.loan_id) as total_loans,
+    SUM(l.amount) as total_amount,
+    SUM(CASE WHEN l.status = 'paid' THEN l.amount ELSE 0 END) as total_repaid,
+    SUM(CASE WHEN l.status = 'defaulted' THEN l.amount ELSE 0 END) as total_defaulted,
+    AVG(l.interest_rate) as average_interest_rate,
+    AVG(l.term_months) as average_term
+FROM loans l
+JOIN loan_types lt ON l.loan_type_id = lt.loan_type_id
+WHERE l.disbursement_date IS NOT NULL
+AND l.disbursement_date BETWEEN ? AND ?
+GROUP BY month, lt.loan_name
+ORDER BY month, lt.loan_name;
+</code>
+
+    <h3>3. User Growth and Activity</h3>
+    <code>
+-- Track user registration over time
+SELECT 
+    DATE_FORMAT(registration_date, '%Y-%m') as month,
+    user_type,
+    COUNT(*) as new_users
+FROM users
+WHERE registration_date BETWEEN ? AND ?
+GROUP BY month, user_type
+ORDER BY month, user_type;
+
+-- Get active user statistics
+SELECT 
+    DATE_FORMAT(last_login, '%Y-%m') as month,
+    user_type,
+    COUNT(DISTINCT user_id) as active_users
+FROM users
+WHERE last_login BETWEEN ? AND ?
+GROUP BY month, user_type
+ORDER BY month, user_type;
+</code>
+
+    <h3>4. Marketplace Performance</h3>
+    <code>
+-- Get order statistics by district
+SELECT 
+    u.district,
+    COUNT(DISTINCT o.order_id) as total_orders,
+    SUM(o.total_amount) as total_revenue,
+    COUNT(DISTINCT o.buyer_id) as unique_buyers,
+    AVG(o.total_amount) as average_order_value
+FROM orders o
+JOIN buyer_profiles bp ON o.buyer_id = bp.buyer_id
+JOIN users u ON bp.user_id = u.user_id
+WHERE o.order_date BETWEEN ? AND ?
+GROUP BY u.district
+ORDER BY total_revenue DESC;
+
+-- Get top selling products
+SELECT 
+    p.product_id,
+    p.product_name,
+    p.bengali_name,
+    pc.category_name,
+    SUM(oi.quantity) as total_quantity_sold,
+    SUM(oi.total_price) as total_revenue,
+    COUNT(DISTINCT o.buyer_id) as unique_buyers
+FROM products p
+JOIN order_items oi ON p.product_id = oi.product_id
+JOIN orders o ON oi.order_id = o.order_id
+JOIN product_categories pc ON p.category_id = pc.category_id
+WHERE o.order_date BETWEEN ? AND ?
+GROUP BY p.product_id, p.product_name, p.bengali_name, pc.category_name
+ORDER BY total_quantity_sold DESC
+LIMIT 20;
+</code>
+
+    <h3>5. System Performance Monitoring</h3>
+    <code>
+-- Monitor transaction volume
+SELECT 
+    DATE_FORMAT(transaction_date, '%Y-%m-%d') as date,
+    transaction_type,
+    COUNT(*) as transaction_count,
+    SUM(amount) as total_amount,
+    MIN(amount) as min_amount,
+    MAX(amount) as max_amount,
+    AVG(amount) as avg_amount
+FROM transactions
+WHERE transaction_date BETWEEN ? AND ?
+GROUP BY date, transaction_type
+ORDER BY date DESC, transaction_type;
+
+-- Monitor system growth
+SELECT 
+    (SELECT COUNT(*) FROM users WHERE user_type = 'farmer') as total_farmers,
+    (SELECT COUNT(*) FROM users WHERE user_type = 'buyer') as total_buyers,
+    (SELECT COUNT(*) FROM products) as total_products,
+    (SELECT COUNT(*) FROM orders) as total_orders,
+    (SELECT COUNT(*) FROM loans) as total_loans,
+    (SELECT SUM(amount) FROM loans WHERE status IN ('disbursed', 'active', 'paid')) as total_loan_amount,
+    (SELECT SUM(total_amount) FROM orders) as total_marketplace_revenue;
+</code>
+</body>
+</html> 

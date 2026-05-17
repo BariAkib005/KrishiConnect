@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Dashboard - KrishiConnect</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="../images/krishiconnect-logo.png" alt="KrishiConnect Logo" style="height: 30px;">
+                    <span>KrishiConnect</span>
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="buyer-dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="buyer-profile.html"><i class="fas fa-user"></i> My Profile</a></li>
+                <li><a href="marketplace.html"><i class="fas fa-store"></i> Marketplace</a></li>
+                <li><a href="shopping-cart.html"><i class="fas fa-shopping-cart"></i> Shopping Cart</a></li>
+                <li><a href="order-history.html"><i class="fas fa-history"></i> Order History</a></li>
+                <li><a href="my-farmers.html"><i class="fas fa-users"></i> My Farmers</a></li>
+                <li><a href="buyer-settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="../index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="dashboard-header">
+                <div>
+                    <h1>Welcome, Fatima Begum</h1>
+                    <p>Browse fresh produce and manage your orders</p>
+                </div>
+                <div class="user-info">
+                    <span>Last login: Today at 10:15 AM</span>
+                </div>
+            </div>
+
+            <!-- Dashboard Cards -->
+            <div class="dashboard-cards">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <p>Active Orders</p>
+                            <h3>5</h3>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                    </div>
+                    <p>2 shipping today</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <p>Total Spent</p>
+                            <h3>৳42,850</h3>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                    </div>
+                    <p>Last 30 days</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <p>Connected Farmers</p>
+                            <h3>8</h3>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                    </div>
+                    <p>3 new this month</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <p>Shopping Cart</p>
+                            <h3>3</h3>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                    <p>Items pending checkout</p>
+                </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <h2 style="margin: 2rem 0 1rem;">Recent Orders</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Items</th>
+                            <th>Farmer</th>
+                            <th>Order Date</th>
+                            <th>Delivery Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#ORD-8561</td>
+                            <td>Tomato, Potato, Onion</td>
+                            <td>Abdul Rahman</td>
+                            <td>15 May 2023</td>
+                            <td>18 May 2023</td>
+                            <td>৳1,850</td>
+                            <td><span style="background-color: var(--secondary-green); color: white; padding: 4px 8px; border-radius: 4px;">Delivered</span></td>
+                            <td><a href="#" class="btn btn-primary" style="padding: 4px 8px;">Details</a></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-8542</td>
+                            <td>Brinjal, Cauliflower</td>
+                            <td>Karim Miah</td>
+                            <td>12 May 2023</td>
+                            <td>15 May 2023</td>
+                            <td>৳1,200</td>
+                            <td><span style="background-color: var(--secondary-green); color: white; padding: 4px 8px; border-radius: 4px;">Delivered</span></td>
+                            <td><a href="#" class="btn btn-primary" style="padding: 4px 8px;">Details</a></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-8517</td>
+                            <td>Rice (25kg)</td>
+                            <td>Selim Ahmed</td>
+                            <td>8 May 2023</td>
+                            <td>20 May 2023</td>
+                            <td>৳3,500</td>
+                            <td><span style="background-color: var(--yellow); color: var(--black); padding: 4px 8px; border-radius: 4px;">In Transit</span></td>
+                            <td><a href="#" class="btn btn-primary" style="padding: 4px 8px;">Track</a></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-8492</td>
+                            <td>Mixed Vegetables</td>
+                            <td>Fatima Akter</td>
+                            <td>5 May 2023</td>
+                            <td>19 May 2023</td>
+                            <td>৳2,750</td>
+                            <td><span style="background-color: #f44336; color: white; padding: 4px 8px; border-radius: 4px;">Processing</span></td>
+                            <td><a href="#" class="btn btn-primary" style="padding: 4px 8px;">Track</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align: right; margin-top: 1rem;">
+                <a href="order-history.html" class="btn btn-primary">View All Orders</a>
+            </div>
+
+            <!-- Recommended Products -->
+            <h2 style="margin: 2rem 0 1rem;">Recommended for You</h2>
+            <div class="featured-items">
+                <div class="featured-item">
+                    <img src="../images/vegetables/cauliflower.jpg" alt="Cauliflower">
+                    <div class="featured-item-content">
+                        <h3>Cauliflower (Phulkopi)</h3>
+                        <p>Fresh cauliflower from Bogra</p>
+                        <div class="price">৳45 per piece</div>
+                        <a href="#" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="featured-item">
+                    <img src="../images/vegetables/okra.jpg" alt="Okra">
+                    <div class="featured-item-content">
+                        <h3>Okra (Dherosh)</h3>
+                        <p>Organic okra from Jessore</p>
+                        <div class="price">৳50 per kg</div>
+                        <a href="#" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="featured-item">
+                    <img src="../images/vegetables/spinach.jpg" alt="Spinach">
+                    <div class="featured-item-content">
+                        <h3>Spinach (Palong Shak)</h3>
+                        <p>Fresh spinach from Narsingdi</p>
+                        <div class="price">৳30 per bundle</div>
+                        <a href="#" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="featured-item">
+                    <img src="../images/vegetables/potato.jpg" alt="Potato">
+                    <div class="featured-item-content">
+                        <h3>Potato (Alu)</h3>
+                        <p>Premium potatoes from Munshiganj</p>
+                        <div class="price">৳25 per kg</div>
+                        <a href="#" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 1rem;">
+                <a href="marketplace.html" class="btn btn-primary">Browse All Products</a>
+            </div>
+
+            <!-- Connected Farmers -->
+            <h2 style="margin: 2rem 0 1rem;">Your Connected Farmers</h2>
+            <div class="stories-container">
+                <div class="story-card">
+                    <img src="../images/farmers/farmer1.jpg" alt="Abdul Rahman">
+                    <div class="story-content">
+                        <h3>Abdul Rahman</h3>
+                        <p>Farmer from Bogra</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

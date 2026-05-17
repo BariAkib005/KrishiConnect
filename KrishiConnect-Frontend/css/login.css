@@ -1,0 +1,26 @@
+/* ============================================
+   KrishiConnect — Login Page Styles
+   ============================================ */
+
+.auth-page{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.auth-left{background:linear-gradient(135deg,var(--emerald-dark),var(--navy));color:var(--white);display:flex;flex-direction:column;justify-content:center;padding:4rem;position:relative;overflow:hidden}
+.auth-left::before{content:'';position:absolute;width:400px;height:400px;background:rgba(240,165,0,.08);border-radius:50%;top:-100px;right:-100px}
+.auth-left::after{content:'';position:absolute;width:300px;height:300px;background:rgba(255,255,255,.04);border-radius:50%;bottom:-80px;left:-80px}
+.auth-left h1{font-size:2.5rem;margin-bottom:1rem;position:relative;z-index:1}
+.auth-left p{font-size:1.1rem;opacity:.8;position:relative;z-index:1;max-width:400px}
+.auth-right{display:flex;align-items:center;justify-content:center;padding:3rem}
+.auth-form{width:100%;max-width:440px}
+.auth-form h2{font-size:1.8rem;margin-bottom:.5rem}
+.auth-form .subtitle{color:var(--gray);margin-bottom:2rem}
+
+.role-selector{display:flex;gap:.5rem;margin-bottom:1.5rem}
+.role-btn{flex:1;padding:10px;border:2px solid var(--surface-2);border-radius:var(--radius);text-align:center;cursor:pointer;font-weight:600;font-size:.9rem;transition:var(--transition);background:var(--white);color:var(--slate)}
+.role-btn:hover,.role-btn.active{border-color:var(--emerald);color:var(--emerald);background:rgba(26,107,60,.04)}
+
+.divider{display:flex;align-items:center;gap:1rem;margin:1.5rem 0;color:var(--gray-light);font-size:.85rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--surface-2)}
+
+.auth-footer{text-align:center;margin-top:1.5rem;font-size:.9rem;color:var(--gray)}
+.auth-footer a{color:var(--emerald);font-weight:600}
+
+@media(max-width:1024px){.auth-page{grid-template-columns:1fr}.auth-left{display:none}}

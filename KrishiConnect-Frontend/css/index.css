@@ -1,0 +1,55 @@
+/* ============================================
+   KrishiConnect — Home / Landing Page Styles
+   ============================================ */
+
+/* Hero */
+.hero{position:relative;min-height:85vh;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--white);overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,77,42,.85),rgba(13,27,42,.7))}
+.hero-content{position:relative;z-index:2;max-width:800px;padding:2rem;animation:fadeInUp .8s ease}
+.hero h1{font-size:clamp(2.2rem,5vw,3.8rem);margin-bottom:1.2rem;letter-spacing:-1px}
+.hero h1 span{color:var(--gold)}
+.hero p{font-size:clamp(1rem,2vw,1.25rem);opacity:.9;margin-bottom:2.5rem;max-width:600px;margin-left:auto;margin-right:auto}
+.hero .btn-group{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+
+/* Feature Cards */
+.featured-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}
+.feature-card{text-align:center;padding:2.5rem 2rem}
+.feature-card .icon-wrap{width:72px;height:72px;background:linear-gradient(135deg,var(--emerald),var(--emerald-light));border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;color:var(--white);font-size:1.5rem;box-shadow:0 8px 25px rgba(26,107,60,.25)}
+.feature-card h3{margin-bottom:.5rem;font-size:1.1rem}
+.feature-card p{color:var(--gray);font-size:.9rem}
+
+/* Product Cards (home) */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.5rem}
+.product-card{background:var(--white);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid rgba(0,0,0,.04);transition:var(--transition)}
+.product-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-6px)}
+.product-card .img-wrap{position:relative;overflow:hidden;height:220px}
+.product-card .img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.product-card:hover .img-wrap img{transform:scale(1.08)}
+.product-card .badge{position:absolute;top:12px;left:12px;background:var(--emerald);color:var(--white);padding:4px 14px;border-radius:var(--radius-full);font-size:.75rem;font-weight:600}
+.product-card .details{padding:1.25rem}
+.product-card .details h3{font-size:1.1rem;margin-bottom:.4rem}
+.product-card .details .origin{color:var(--gray);font-size:.85rem;margin-bottom:.75rem;display:flex;align-items:center;gap:4px}
+.product-card .price-row{display:flex;justify-content:space-between;align-items:center;margin-top:.75rem}
+.product-card .price{font-family:'Inter',sans-serif;font-weight:700;font-size:1.2rem;color:var(--emerald)}
+.product-card .rating{color:var(--gold);font-size:.85rem;display:flex;align-items:center;gap:4px}
+
+/* Stats */
+.stats-section{background:linear-gradient(135deg,var(--emerald-dark),var(--navy));color:var(--white);padding:4rem 0}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;text-align:center}
+.stat-item h3{font-size:2.8rem;font-weight:800;margin-bottom:.25rem}
+.stat-item h3 span{color:var(--gold)}
+.stat-item p{opacity:.8;font-size:1rem}
+
+/* Success Stories */
+.stories-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem}
+.story-card{background:var(--white);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid rgba(0,0,0,.04);transition:var(--transition)}
+.story-card:hover{box-shadow:var(--shadow);transform:translateY(-4px)}
+.story-card .img-wrap{height:220px;overflow:hidden}
+.story-card .img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.story-card:hover .img-wrap img{transform:scale(1.05)}
+.story-card .content{padding:1.5rem}
+.story-card .content h3{margin-bottom:.5rem;font-size:1.15rem}
+.story-card .content p{color:var(--gray);font-size:.95rem;margin-bottom:1rem}
+
+@media(max-width:576px){.hero{min-height:70vh}.product-grid{grid-template-columns:1fr}}

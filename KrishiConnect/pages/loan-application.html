@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Application - KrishiConnect</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container navbar">
+            <div class="logo">
+                <img src="../images/krishiconnect-logo.png" alt="KrishiConnect Logo">
+                <span>KrishiConnect</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="marketplace.html">Marketplace</a></li>
+                <li><a href="microfinance.html" class="active">Microfinance</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" class="btn btn-primary">Login/Register</a></li>
+            </ul>
+            <button class="language-switch">বাংলা</button>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Loan Application Form</h2>
+                <p>Fill in the form below to apply for financial support for your agricultural activities</p>
+            </div>
+            
+            <div class="form-container" style="max-width: 800px;">
+                <form>
+                    <h3 style="margin-bottom: 1.5rem;">Personal Information</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div class="form-group">
+                            <label for="full-name">Full Name</label>
+                            <input type="text" id="full-name" value="Abdul Rahman" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="farmer-id">Farmer ID</label>
+                            <input type="text" id="farmer-id" value="F-10042" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" value="01712345678" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="district">District</label>
+                            <input type="text" id="district" value="Rangpur" readonly>
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin: 2rem 0 1.5rem;">Loan Details</h3>
+                    <div class="form-group">
+                        <label for="loan-type">Loan Type</label>
+                        <select id="loan-type" required>
+                            <option value="">Select Loan Type</option>
+                            <option value="seed-capital">Seed Capital Loan (৳10,000 - ৳50,000)</option>
+                            <option value="equipment">Equipment Loan (৳50,000 - ৳200,000)</option>
+                            <option value="land-development">Land Development Loan (৳100,000 - ৳500,000)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loan-amount">Loan Amount (৳)</label>
+                        <input type="number" id="loan-amount" placeholder="Enter amount in Taka" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loan-purpose">Purpose of Loan</label>
+                        <textarea id="loan-purpose" placeholder="Describe how you plan to use this loan..." required></textarea>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div class="form-group">
+                            <label for="repayment-term">Repayment Term</label>
+                            <select id="repayment-term" required>
+                                <option value="">Select Term</option>
+                                <option value="6">6 months</option>
+                                <option value="12">12 months (1 year)</option>
+                                <option value="24">24 months (2 years)</option>
+                                <option value="36">36 months (3 years)</option>
+                                <option value="60">60 months (5 years)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="collateral">Collateral (if applicable)</label>
+                            <select id="collateral">
+                                <option value="">No Collateral</option>
+                                <option value="land">Land Title</option>
+                                <option value="equipment">Farm Equipment</option>
+                                <option value="other">Other Asset</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="collateral-details" class="form-group" style="display: none;">
+                        <label for="collateral-description">Collateral Details</label>
+                        <textarea id="collateral-description" placeholder="Describe your collateral..."></textarea>
+                    </div>
+                    
+                    <h3 style="margin: 2rem 0 1.5rem;">Banking Information</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div class="form-group">
+                            <label for="bank-name">Bank Name</label>
+                            <input type="text" id="bank-name" placeholder="Enter your bank name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="account-number">Account Number</label>
+                            <input type="text" id="account-number" placeholder="Enter your account number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="branch">Branch Name</label>
+                            <input type="text" id="branch" placeholder="Enter branch name" required>
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin: 2rem 0 1.5rem;">Additional Information</h3>
+                    <div class="form-group">
+                        <label for="farming-experience">Years of Farming Experience</label>
+                        <input type="number" id="farming-experience" placeholder="Enter years of experience" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="previous-loans">Previous Loans with KrishiConnect</label>
+                        <select id="previous-loans" required>
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="additional-info">Additional Information (Optional)</label>
+                        <textarea id="additional-info" placeholder="Any additional information you want to share..."></textarea>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 2rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" id="terms-conditions" required>
+                            <span>I agree to the <a href="#" style="color: var(--primary-green);">terms and conditions</a> of KrishiConnect microfinance services.</span>
+                        </label>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: flex-end;">
+                        <button type="button" class="btn btn-secondary">Save as Draft</button>
+                        <button type="submit" class="btn btn-primary">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>KrishiConnect</h3>
+                    <p>Empowering Bangladeshi farmers through direct market access and financial inclusion.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="marketplace.html">Marketplace</a></li>
+                        <li><a href="microfinance.html">Microfinance</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>For Farmers</h3>
+                    <ul>
+                        <li><a href="farmer-register.html">Register as Farmer</a></li>
+                        <li><a href="farmer-dashboard.html">Farmer Dashboard</a></li>
+                        <li><a href="loan-application.html">Apply for Loan</a></li>
+                        <li><a href="agriculture-tips.html">Farming Tips</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>For Buyers</h3>
+                    <ul>
+                        <li><a href="buyer-register.html">Register as Buyer</a></li>
+                        <li><a href="buyer-dashboard.html">Buyer Dashboard</a></li>
+                        <li><a href="order-tracking.html">Track Orders</a></li>
+                        <li><a href="direct-sourcing.html">Direct Sourcing</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 KrishiConnect. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 
