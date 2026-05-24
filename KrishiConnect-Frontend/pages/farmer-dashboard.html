@@ -3,91 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farmer Dashboard — KrishiConnect</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Redirecting - KrishiConnect</title>
+    <meta http-equiv="refresh" content="0; url=login.php">
 </head>
 <body>
-
-<div class="dashboard-layout">
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <a href="../index.html" class="logo"><img src="../images/krishiconnect-logo.png" alt="" style="filter:brightness(0) invert(1);height:28px"><span>KrishiConnect</span></a>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="farmer-dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a>
-            <a href="#"><i class="fas fa-user"></i> My Profile</a>
-            <a href="#"><i class="fas fa-warehouse"></i> Inventory</a>
-            <a href="#"><i class="fas fa-hand-holding-usd"></i> Loans</a>
-            <a href="#"><i class="fas fa-chart-line"></i> Sales</a>
-            <a href="#"><i class="fas fa-lightbulb"></i> Market Insights</a>
-            <a href="#"><i class="fas fa-cog"></i> Settings</a>
-            <a href="../index.html" style="margin-top:2rem;opacity:.6"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </nav>
-    </aside>
-
-    <!-- MAIN -->
-    <main class="main-content">
-        <div class="dash-header">
-            <div><h1>Welcome, Abdul Rahman</h1><p>Manage your farm, inventory, and finances</p></div>
-            <div class="meta"><i class="fas fa-clock"></i> Last login: Today at 9:45 AM</div>
-        </div>
-
-        <!-- STAT CARDS -->
-        <div class="dash-cards">
-            <div class="dash-card">
-                <div class="info"><p>Total Sales</p><h3>৳28,500</h3><div class="sub">Last 30 days</div></div>
-                <div class="icon green"><i class="fas fa-chart-bar"></i></div>
-            </div>
-            <div class="dash-card">
-                <div class="info"><p>Active Listings</p><h3>12</h3><div class="sub">4 low stock items</div></div>
-                <div class="icon gold"><i class="fas fa-tags"></i></div>
-            </div>
-            <div class="dash-card">
-                <div class="info"><p>Loan Balance</p><h3>৳15,000</h3><div class="sub">Next: ৳2,500 (15 Jun)</div></div>
-                <div class="icon navy"><i class="fas fa-money-bill-wave"></i></div>
-            </div>
-            <div class="dash-card">
-                <div class="info"><p>New Orders</p><h3>8</h3><div class="sub">2 need approval</div></div>
-                <div class="icon red"><i class="fas fa-shopping-bag"></i></div>
-            </div>
-        </div>
-
-        <!-- FARM PROFILE -->
-        <div class="card" style="margin-bottom:2rem">
-            <h2 style="font-size:1.2rem;margin-bottom:1.25rem"><i class="fas fa-tractor" style="color:var(--emerald);margin-right:8px"></i> Farm Profile</h2>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.25rem">
-                <div><p style="font-size:.8rem;color:var(--gray);text-transform:uppercase;letter-spacing:.5px">Farm Size</p><p style="font-weight:600;font-size:1.1rem">2.5 Acres</p></div>
-                <div><p style="font-size:.8rem;color:var(--gray);text-transform:uppercase;letter-spacing:.5px">Location</p><p style="font-weight:600;font-size:1.1rem">Rangpur District</p></div>
-                <div><p style="font-size:.8rem;color:var(--gray);text-transform:uppercase;letter-spacing:.5px">Main Crops</p><p style="font-weight:600;font-size:1.1rem">Rice, Potato, Brinjal</p></div>
-                <div><p style="font-size:.8rem;color:var(--gray);text-transform:uppercase;letter-spacing:.5px">Credit Score</p><p style="font-weight:600;font-size:1.1rem;color:var(--gold)"><i class="fas fa-star"></i> 4.5 / 5</p></div>
-            </div>
-        </div>
-
-        <!-- RECENT SALES TABLE -->
-        <div class="table-wrap">
-            <h2><i class="fas fa-receipt" style="color:var(--emerald);margin-right:8px"></i> Recent Sales</h2>
-            <table>
-                <thead><tr><th>Order ID</th><th>Product</th><th>Qty</th><th>Buyer</th><th>Date</th><th>Amount</th><th>Status</th></tr></thead>
-                <tbody>
-                    <tr><td>#ORD-7865</td><td>Potato (Alu)</td><td>100 kg</td><td>Dhaka Food Market</td><td>10 May 2025</td><td>৳2,500</td><td><span class="badge-status badge-success">Completed</span></td></tr>
-                    <tr><td>#ORD-7856</td><td>Brinjal (Begun)</td><td>50 kg</td><td>Green Grocery</td><td>8 May 2025</td><td>৳2,000</td><td><span class="badge-status badge-success">Completed</span></td></tr>
-                    <tr><td>#ORD-7832</td><td>Tomato</td><td>75 kg</td><td>Fresh Mart</td><td>5 May 2025</td><td>৳4,500</td><td><span class="badge-status badge-warning">Shipping</span></td></tr>
-                    <tr><td>#ORD-7828</td><td>Cauliflower</td><td>40 pcs</td><td>Organic Foods</td><td>3 May 2025</td><td>৳1,800</td><td><span class="badge-status badge-warning">Shipping</span></td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- MARKET INSIGHTS -->
-        <h2 style="font-size:1.2rem;margin:1.5rem 0 1rem"><i class="fas fa-lightbulb" style="color:var(--gold);margin-right:8px"></i> Market Insights</h2>
-        <div class="dash-cards">
-            <div class="card"><h3 style="font-size:1rem;margin-bottom:.5rem">Price Trends</h3><p style="color:var(--gray);font-size:.9rem">Potato prices increasing by 15% this month.</p></div>
-            <div class="card"><h3 style="font-size:1rem;margin-bottom:.5rem">Seasonal Forecast</h3><p style="color:var(--gray);font-size:.9rem">Prepare for monsoon season crops by June.</p></div>
-            <div class="card"><h3 style="font-size:1rem;margin-bottom:.5rem">Demand Hotspots</h3><p style="color:var(--gray);font-size:.9rem">High demand for organic vegetables in Dhaka.</p></div>
-        </div>
-    </main>
-</div>
-
+    <script>window.location.replace('login.php');</script>
+    <p>Please <a href="login.php">sign in</a> to access your dashboard.</p>
 </body>
 </html>

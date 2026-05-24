@@ -3,107 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buyer Dashboard — KrishiConnect</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Redirecting - KrishiConnect</title>
+    <meta http-equiv="refresh" content="0; url=login.php">
 </head>
 <body>
-
-<div class="dashboard-layout">
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <a href="../index.html" class="logo"><img src="../images/krishiconnect-logo.png" alt="" style="filter:brightness(0) invert(1);height:28px"><span>KrishiConnect</span></a>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="buyer-dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a>
-            <a href="#"><i class="fas fa-user"></i> My Profile</a>
-            <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace</a>
-            <a href="#"><i class="fas fa-shopping-cart"></i> Shopping Cart</a>
-            <a href="#"><i class="fas fa-history"></i> Order History</a>
-            <a href="#"><i class="fas fa-users"></i> My Farmers</a>
-            <a href="#"><i class="fas fa-cog"></i> Settings</a>
-            <a href="../index.html" style="margin-top:2rem;opacity:.6"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </nav>
-    </aside>
-
-    <main class="main-content">
-        <div class="dash-header">
-            <div><h1>Welcome, Fatima Begum</h1><p>Browse fresh produce and manage your orders</p></div>
-            <div class="meta"><i class="fas fa-clock"></i> Last login: Today at 10:15 AM</div>
-        </div>
-
-        <!-- STAT CARDS -->
-        <div class="dash-cards">
-            <div class="dash-card">
-                <div class="info"><p>Active Orders</p><h3>5</h3><div class="sub">2 shipping today</div></div>
-                <div class="icon green"><i class="fas fa-shipping-fast"></i></div>
-            </div>
-            <div class="dash-card">
-                <div class="info"><p>Total Spent</p><h3>৳42,850</h3><div class="sub">Last 30 days</div></div>
-                <div class="icon gold"><i class="fas fa-wallet"></i></div>
-            </div>
-            <div class="dash-card">
-                <div class="info"><p>Connected Farmers</p><h3>8</h3><div class="sub">3 new this month</div></div>
-                <div class="icon navy"><i class="fas fa-user-friends"></i></div>
-            </div>
-            <div class="dash-card">
-                <div class="info"><p>Cart Items</p><h3>3</h3><div class="sub">Pending checkout</div></div>
-                <div class="icon red"><i class="fas fa-shopping-cart"></i></div>
-            </div>
-        </div>
-
-        <!-- RECENT ORDERS -->
-        <div class="table-wrap">
-            <h2><i class="fas fa-clipboard-list" style="color:var(--emerald);margin-right:8px"></i> Recent Orders</h2>
-            <table>
-                <thead><tr><th>Order ID</th><th>Items</th><th>Farmer</th><th>Order Date</th><th>Delivery</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
-                <tbody>
-                    <tr><td>#ORD-8561</td><td>Tomato, Potato, Onion</td><td>Abdul Rahman</td><td>15 May</td><td>18 May</td><td>৳1,850</td><td><span class="badge-status badge-success">Delivered</span></td><td><a href="#" class="btn btn-primary btn-sm">Details</a></td></tr>
-                    <tr><td>#ORD-8542</td><td>Brinjal, Cauliflower</td><td>Karim Miah</td><td>12 May</td><td>15 May</td><td>৳1,200</td><td><span class="badge-status badge-success">Delivered</span></td><td><a href="#" class="btn btn-primary btn-sm">Details</a></td></tr>
-                    <tr><td>#ORD-8517</td><td>Rice (25kg)</td><td>Selim Ahmed</td><td>8 May</td><td>20 May</td><td>৳3,500</td><td><span class="badge-status badge-warning">In Transit</span></td><td><a href="#" class="btn btn-outline btn-sm">Track</a></td></tr>
-                    <tr><td>#ORD-8492</td><td>Mixed Vegetables</td><td>Fatima Akter</td><td>5 May</td><td>19 May</td><td>৳2,750</td><td><span class="badge-status badge-danger">Processing</span></td><td><a href="#" class="btn btn-outline btn-sm">Track</a></td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- RECOMMENDED -->
-        <h2 style="font-size:1.2rem;margin:1.5rem 0 1rem"><i class="fas fa-thumbs-up" style="color:var(--gold);margin-right:8px"></i> Recommended for You</h2>
-        <div class="product-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
-            <div class="product-card">
-                <div class="img-wrap" style="height:160px"><img src="../images/vegetables/cauliflower.jpg" alt="Cauliflower"></div>
-                <div class="details">
-                    <h3 style="font-size:1rem">Cauliflower</h3>
-                    <div class="price-row"><span class="price" style="font-size:1rem">৳45/pc</span><span class="rating"><i class="fas fa-star"></i> 4.0</span></div>
-                    <button class="btn btn-primary btn-sm btn-block" style="margin-top:.75rem">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="img-wrap" style="height:160px"><img src="../images/vegetables/okra.jpg" alt="Okra"></div>
-                <div class="details">
-                    <h3 style="font-size:1rem">Okra (Dherosh)</h3>
-                    <div class="price-row"><span class="price" style="font-size:1rem">৳50/kg</span><span class="rating"><i class="fas fa-star"></i> 4.0</span></div>
-                    <button class="btn btn-primary btn-sm btn-block" style="margin-top:.75rem">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="img-wrap" style="height:160px"><img src="../images/vegetables/spinach.jpg" alt="Spinach"></div>
-                <div class="details">
-                    <h3 style="font-size:1rem">Spinach</h3>
-                    <div class="price-row"><span class="price" style="font-size:1rem">৳30/bundle</span><span class="rating"><i class="fas fa-star"></i> 3.5</span></div>
-                    <button class="btn btn-primary btn-sm btn-block" style="margin-top:.75rem">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="img-wrap" style="height:160px"><img src="../images/vegetables/potato.jpg" alt="Potato"></div>
-                <div class="details">
-                    <h3 style="font-size:1rem">Potato (Alu)</h3>
-                    <div class="price-row"><span class="price" style="font-size:1rem">৳25/kg</span><span class="rating"><i class="fas fa-star"></i> 5.0</span></div>
-                    <button class="btn btn-primary btn-sm btn-block" style="margin-top:.75rem">Add to Cart</button>
-                </div>
-            </div>
-        </div>
-    </main>
-</div>
-
+    <script>window.location.replace('login.php');</script>
+    <p>Please <a href="login.php">sign in</a> to access your dashboard.</p>
 </body>
 </html>
