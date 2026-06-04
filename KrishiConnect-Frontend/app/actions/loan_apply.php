@@ -27,13 +27,23 @@ if ($amount >= 200000) {
 }
 
 $pdo = db();
+
+// Get the appropriate loan product based on amount
+$productStmt = $pdo->prepare(
+    'SELECT id FROM loan_products WHERE is_active = 1 AND min_amount <= ? AND max_amount >= ? ORDER BY id LIMIT 1'
+);
+$productStmt->execute([$amount, $amount]);
+$loanProduct = $productStmt->fetch();
+$loanProductId = $loanProduct ? (int)$loanProduct['id'] : 1; // Default to product ID 1 if no match
+
 $stmt = $pdo->prepare(
     'INSERT INTO loan_applications
-        (farmer_id, requested_amount, purpose, tenure_months, location, farm_size, monthly_income, collateral, bank_name, bank_account, risk_level, status)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "pending")'
+        (farmer_id, loan_product_id, requested_amount, purpose, tenure_months, location, farm_size, monthly_income, collateral, bank_name, bank_account, risk_level, status)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "pending")'
 );
 $stmt->execute([
     (int)$user['id'],
+    $loanProductId,
     $amount,
     $loanType !== '' ? ($loanType . ' - ' . $purpose) : $purpose,
     $tenure,

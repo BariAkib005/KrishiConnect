@@ -29,8 +29,12 @@ $address = implode(', ', array_filter($addressParts, fn($v) => $v !== ''));
 $totals = cart_totals($items);
 $pdo = db();
 
-$stmt = $pdo->prepare('INSERT INTO orders (buyer_id, status, total_amount, payment_status, shipping_address) VALUES (?, "pending", ?, "unpaid", ?)');
-$stmt->execute([(int)$user['id'], $totals['total'], $address]);
+// Generate unique order number: KC-YYYYMMDD-HHMMSS-XXXXX
+$orderNumber = 'KC-' . date('YmdHis') . '-' . str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT);
+$finalAmount = $totals['total']; // Can be modified for taxes, discounts, etc.
+
+$stmt = $pdo->prepare('INSERT INTO orders (buyer_id, order_number, status, total_amount, final_amount, payment_status, shipping_address) VALUES (?, ?, "pending", ?, ?, "unpaid", ?)');
+$stmt->execute([(int)$user['id'], $orderNumber, $totals['total'], $finalAmount, $address]);
 $orderId = (int)$pdo->lastInsertId();
 
 foreach ($items as $item) {

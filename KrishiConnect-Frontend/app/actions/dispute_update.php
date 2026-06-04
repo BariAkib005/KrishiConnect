@@ -15,8 +15,8 @@ if ($disputeId <= 0 || !in_array($status, ['in_review', 'resolved'], true)) {
 }
 
 $pdo = db();
-$resolvedAt = $status === 'resolved' ? 'NOW()' : 'NULL';
-$stmt = $pdo->prepare("UPDATE disputes SET status = ?, handled_by = ?, resolved_at = {$resolvedAt} WHERE id = ?");
-$stmt->execute([$status, (int)$user['id'], $disputeId]);
+$resolvedAt = $status === 'resolved' ? date('Y-m-d H:i:s') : null;
+$stmt = $pdo->prepare('UPDATE disputes SET status = ?, handled_by = ?, resolved_at = ? WHERE id = ?');
+$stmt->execute([$status, (int)$user['id'], $resolvedAt, $disputeId]);
 
 redirect('pages/dispute-resolution.php?status=' . $status);
