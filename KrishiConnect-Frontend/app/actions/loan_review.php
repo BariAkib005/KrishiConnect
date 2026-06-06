@@ -61,10 +61,22 @@ $loanStmt->execute([
 ]);
 $loanId = (int)$pdo->lastInsertId();
 
+// for ($i = 1; $i <= $tenure; $i++) {
+//     $dueDate = date('Y-m-d', strtotime("+{$i} month"));
+//     $payStmt = $pdo->prepare('INSERT INTO loan_payments (loan_id, amount, due_date, status) VALUES (?, ?, ?, "due")');
+//     $payStmt->execute([$loanId, $emi, $dueDate]);
+// }
+
+// $upd = $pdo->prepare('UPDATE loan_applications SET status = "approved", reviewed_by = ? WHERE id = ?');
+// $upd->execute([(int)$user['id'], $applicationId]);
+
+// redirect('pages/loan-management.php?tab=approved');
+
 for ($i = 1; $i <= $tenure; $i++) {
     $dueDate = date('Y-m-d', strtotime("+{$i} month"));
-    $payStmt = $pdo->prepare('INSERT INTO loan_payments (loan_id, amount, due_date, status) VALUES (?, ?, ?, "due")');
-    $payStmt->execute([$loanId, $emi, $dueDate]);
+    
+    $payStmt = $pdo->prepare('INSERT INTO loan_payments (loan_id, payment_number, principal_amount, total_amount, due_date, status) VALUES (?, ?, ?, ?, ?, "due")');
+    $payStmt->execute([$loanId, $i, $emi, $emi, $dueDate]);
 }
 
 $upd = $pdo->prepare('UPDATE loan_applications SET status = "approved", reviewed_by = ? WHERE id = ?');
