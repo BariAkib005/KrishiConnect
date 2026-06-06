@@ -1,8 +1,9 @@
+-- All three demo accounts use the password: password123
 INSERT INTO users (full_name, email, phone, role, password_hash, status)
 VALUES
-  ('Admin User', 'admin@krishiconnect.test', '01000000000', 'admin', '$2y$10$Cz25dfKByoVt9M1QY5D5P.i0duQhXG6XakDdH5GIQJ3M6b5V0T0Je', 'active'),
-  ('Rafiq Ahmed', 'farmer@krishiconnect.test', '01700000000', 'farmer', '$2y$10$Cz25dfKByoVt9M1QY5D5P.i0duQhXG6XakDdH5GIQJ3M6b5V0T0Je', 'active'),
-  ('Anita Rahman', 'buyer@krishiconnect.test', '01800000000', 'buyer', '$2y$10$Cz25dfKByoVt9M1QY5D5P.i0duQhXG6XakDdH5GIQJ3M6b5V0T0Je', 'active');
+  ('Admin User', 'admin@krishiconnect.test', '01000000000', 'admin', '$2y$10$5IBaLo5N4dMHQT1b..Brsu/XJspRQxyRTseETEik.d4xooRqApw6C', 'active'),
+  ('Rafiq Ahmed', 'farmer@krishiconnect.test', '01700000000', 'farmer', '$2y$10$5IBaLo5N4dMHQT1b..Brsu/XJspRQxyRTseETEik.d4xooRqApw6C', 'active'),
+  ('Anita Rahman', 'buyer@krishiconnect.test', '01800000000', 'buyer', '$2y$10$5IBaLo5N4dMHQT1b..Brsu/XJspRQxyRTseETEik.d4xooRqApw6C', 'active');
 
 INSERT INTO categories (name, slug)
 VALUES
