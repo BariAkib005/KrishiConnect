@@ -108,7 +108,7 @@ $recommended = db()->query(
             <?php endif; ?>
             <?php foreach ($recommended as $product): ?>
                 <div class="product-card">
-                    <div class="img-wrap" style="height:160px"><img src="<?= asset_url($product['image_path'] ?: 'images/vegetables/tomato.jpg'); ?>" alt="<?= htmlspecialchars($product['name']); ?>"></div>
+                    <div class="img-wrap" style="height: 160px;"><img src="<?= asset_url($product['image_path'] ?: 'images/vegetables/tomato.jpg'); ?>" alt="<?= htmlspecialchars($product['name']); ?>"></div>
                     <div class="details">
                         <h3 style="font-size:1rem"><?= htmlspecialchars($product['name']); ?></h3>
                         <div class="price-row"><span class="price" style="font-size:1rem">BDT <?= number_format((float)$product['price'], 0); ?>/<?= htmlspecialchars($product['unit']); ?></span><span class="rating"><i class="fas fa-star"></i> <?= number_format((float)$product['rating'], 1); ?></span></div>
