@@ -27,20 +27,8 @@ if ($action === 'reject') {
 
 $tenure = (int)($app['tenure_months'] ?? 12);
 $tenure = $tenure > 0 ? $tenure : 12;
+$rate = 9.5;
 $principal = (float)$app['requested_amount'];
-
-// Query loan_products table for interest rates based on loan product
-$productStmt = $pdo->prepare(
-    'SELECT min_interest_rate, max_interest_rate FROM loan_products WHERE id = ? AND is_active = 1'
-);
-$productStmt->execute([(int)$app['loan_product_id']]);
-$product = $productStmt->fetch();
-if ($product) {
-    // Use average of min and max rates for the EMI calculation
-    $rate = ((float)$product['min_interest_rate'] + (float)$product['max_interest_rate']) / 2;
-} else {
-    $rate = 9.5; // Fallback to 9.5% if no product found
-}
 $monthlyRate = $rate / 12 / 100;
 $emi = $monthlyRate > 0
     ? ($principal * $monthlyRate * pow(1 + $monthlyRate, $tenure)) / (pow(1 + $monthlyRate, $tenure) - 1)
