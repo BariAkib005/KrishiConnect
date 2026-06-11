@@ -23,13 +23,17 @@ $error = $_GET['error'] ?? '';
         <div class="auth-form">
             <h2>Create your account</h2>
             <p class="subtitle">Choose your role and complete the secure registration.</p>
+            
             <?php if ($error === 'missing'): ?>
                 <p class="alert">Please fill out the required fields.</p>
             <?php elseif ($error === 'nomatch'): ?>
                 <p class="alert">Passwords do not match.</p>
             <?php elseif ($error === 'exists'): ?>
                 <p class="alert">An account with this email already exists.</p>
+            <?php elseif ($error === 'weak_password'): ?>
+                <p class="alert">Password is too weak! Must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character (e.g., @, #, $, %).</p>
             <?php endif; ?>
+            
             <form method="post" action="<?= url('app/actions/register.php'); ?>">
                 <div class="form-row">
                     <div class="form-group">
