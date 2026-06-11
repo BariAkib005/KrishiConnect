@@ -123,12 +123,69 @@ function db_ensure_schema(PDO $pdo): void
 {
     $hasUsers = $pdo->query("SHOW TABLES LIKE 'users'")->fetch();
     if ($hasUsers) {
+        db_ensure_security_schema($pdo);
         return;
     }
 
     $sqlDir = dirname(__DIR__) . '/sql';
     db_run_sql_file($pdo, $sqlDir . '/schema.sql');
     db_run_sql_file($pdo, $sqlDir . '/seed.sql');
+    db_ensure_security_schema($pdo);
+}
+
+function db_column_exists(PDO $pdo, string $table, string $column): bool
+{
+    $stmt = $pdo->prepare(
+        'SELECT COUNT(*) AS total
+         FROM INFORMATION_SCHEMA.COLUMNS
+         WHERE TABLE_SCHEMA = DATABASE()
+           AND TABLE_NAME = ?
+           AND COLUMN_NAME = ?'
+    );
+    $stmt->execute([$table, $column]);
+
+    return (int)($stmt->fetch()['total'] ?? 0) > 0;
+}
+
+function db_table_exists(PDO $pdo, string $table): bool
+{
+    $stmt = $pdo->prepare(
+        'SELECT COUNT(*) AS total
+         FROM INFORMATION_SCHEMA.TABLES
+         WHERE TABLE_SCHEMA = DATABASE()
+           AND TABLE_NAME = ?'
+    );
+    $stmt->execute([$table]);
+
+    return (int)($stmt->fetch()['total'] ?? 0) > 0;
+}
+
+function db_ensure_security_schema(PDO $pdo): void
+{
+    if (!db_column_exists($pdo, 'users', 'admin_pin_hash')) {
+        $pdo->exec('ALTER TABLE users ADD COLUMN admin_pin_hash VARCHAR(255) DEFAULT NULL AFTER password_hash');
+    }
+
+    if (!db_column_exists($pdo, 'products', 'product_status')) {
+        $pdo->exec('ALTER TABLE products ADD COLUMN product_status ENUM("pending","approved","rejected") NOT NULL DEFAULT "pending" AFTER rating');
+        $pdo->exec('UPDATE products SET product_status = "approved" WHERE status = "active"');
+    }
+
+    if (!db_table_exists($pdo, 'security_logs')) {
+        $pdo->exec(
+            'CREATE TABLE security_logs (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NULL,
+                action VARCHAR(80) NOT NULL,
+                details TEXT NULL,
+                ip_address VARCHAR(45) NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                INDEX idx_security_logs_action_created (action, created_at),
+                INDEX idx_security_logs_user_created (user_id, created_at),
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+            )'
+        );
+    }
 }
 
 function db_run_sql_file(PDO $pdo, string $file): void

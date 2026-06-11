@@ -5,7 +5,7 @@ require_once __DIR__ . '/../app/includes/header.php';
 require_once __DIR__ . '/../app/includes/db.php';
 
 $id = (int)($_GET['id'] ?? 0);
-$stmt = db()->prepare('SELECT p.*, c.name AS category_name, (SELECT image_path FROM product_images WHERE product_id = p.id AND is_primary = 1 LIMIT 1) AS image_path FROM products p JOIN categories c ON c.id = p.category_id WHERE p.id = ?');
+$stmt = db()->prepare('SELECT p.*, c.name AS category_name, (SELECT image_path FROM product_images WHERE product_id = p.id AND is_primary = 1 LIMIT 1) AS image_path FROM products p JOIN categories c ON c.id = p.category_id WHERE p.id = ? AND p.status = "active" AND p.product_status = "approved"');
 $stmt->execute([$id]);
 $product = $stmt->fetch();
 ?>

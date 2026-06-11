@@ -5,6 +5,7 @@ CREATE TABLE users (
     phone VARCHAR(40) DEFAULT NULL,
     role ENUM('farmer','buyer','finance','admin') NOT NULL DEFAULT 'farmer',
     password_hash VARCHAR(255) NOT NULL,
+    admin_pin_hash VARCHAR(255) DEFAULT NULL,
     status ENUM('active','pending','suspended') NOT NULL DEFAULT 'active',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -70,10 +71,23 @@ CREATE TABLE products (
     unit VARCHAR(20) NOT NULL DEFAULT 'kg',
     quantity_available DECIMAL(10,2) NOT NULL DEFAULT 0,
     rating DECIMAL(3,2) DEFAULT 0,
+    product_status ENUM('pending','approved','rejected') NOT NULL DEFAULT 'pending',
     status ENUM('active','inactive','sold_out') NOT NULL DEFAULT 'active',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (farmer_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE RESTRICT
+);
+
+CREATE TABLE security_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NULL,
+    action VARCHAR(80) NOT NULL,
+    details TEXT NULL,
+    ip_address VARCHAR(45) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_security_logs_action_created (action, created_at),
+    INDEX idx_security_logs_user_created (user_id, created_at),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE product_images (

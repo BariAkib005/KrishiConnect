@@ -1,6 +1,6 @@
 <?php
 $title = 'Login - KrishiConnect';
-require_once __DIR__ . '/../app/includes/helpers.php';
+require_once __DIR__ . '/../app/includes/auth.php';
 $error = $_GET['error'] ?? '';
 ?>
 <!DOCTYPE html>
@@ -29,11 +29,16 @@ $error = $_GET['error'] ?? '';
                 <p class="alert">Your account is not active.</p>
             <?php elseif ($error === 'missing'): ?>
                 <p class="alert">Please enter your email and password.</p>
+            <?php elseif ($error === 'csrf'): ?>
+                <p class="alert">Your session expired. Please try again.</p>
+            <?php elseif ($error === 'unauthorized'): ?>
+                <p class="alert">Please sign in with an authorized account.</p>
             <?php endif; ?>
-            <form method="post" action="<?= url('app/actions/login.php'); ?>">
+            <form method="post" action="<?= url('app/actions/login_process.php'); ?>">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token('login_form'), ENT_QUOTES); ?>">
                 <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                    <label for="email_or_username">Email Address or Username</label>
+                    <input type="text" id="email_or_username" name="email_or_username" placeholder="you@example.com" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
@@ -43,6 +48,7 @@ $error = $_GET['error'] ?? '';
             </form>
             <div class="auth-footer">
                 <p>New here? <a href="<?= url('pages/register.php'); ?>">Create an account</a></p>
+                <p><a href="<?= url('pages/admin_login.php'); ?>">Admin PIN login</a></p>
             </div>
         </div>
     </section>

@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../includes/auth.php';
 
 require_login();
+require_csrf_token($_POST['csrf_token'] ?? null, 'product_create', 'pages/dashboard.php?product_error=invalid#list-produce');
 
 $user = current_user();
 if (!$user || $user['role'] !== 'farmer') {
@@ -82,8 +83,8 @@ if ($imagePath === null) {
 $pdo->beginTransaction();
 try {
     $stmt = $pdo->prepare(
-        'INSERT INTO products (farmer_id, category_id, name, variety, description, price, unit, quantity_available, rating, status)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ?)'
+        'INSERT INTO products (farmer_id, category_id, name, variety, description, price, unit, quantity_available, rating, product_status, status)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?)'
     );
     $stmt->execute([
         $user['id'],
@@ -94,7 +95,8 @@ try {
         $price,
         $unit,
         $quantity,
-        'active',
+        'pending',
+        'inactive',
     ]);
 
     $productId = (int)$pdo->lastInsertId();

@@ -26,7 +26,7 @@ $name = $user['full_name'] ?? 'Admin';
         <nav class="sidebar-nav">
             <a href="<?= url('pages/admin-dashboard.php'); ?>" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             <a href="<?= url('pages/user-moderation.php'); ?>"><i class="fas fa-users"></i> User Management</a>
-            <a href="<?= url('pages/loan-management.php'); ?>"><i class="fas fa-hand-holding-usd"></i> Loan Management</a>
+            <a href="<?= url('admin/loan_management.php'); ?>"><i class="fas fa-hand-holding-usd"></i> Loan Management</a>
             <a href="<?= url('pages/marketplace.php'); ?>"><i class="fas fa-store"></i> Marketplace</a>
             <a href="<?= url('pages/reporting.php'); ?>"><i class="fas fa-chart-bar"></i> Reports</a>
             <a href="<?= url('pages/settings.php'); ?>"><i class="fas fa-cog"></i> Settings</a>

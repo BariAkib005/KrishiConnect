@@ -23,7 +23,7 @@ function add_to_wishlist(int $userId, int $productId): void
     $pdo = db();
     $wishlistId = get_or_create_wishlist_id($userId);
 
-    $productStmt = $pdo->prepare('SELECT id FROM products WHERE id = ? AND status = "active"');
+    $productStmt = $pdo->prepare('SELECT id FROM products WHERE id = ? AND status = "active" AND product_status = "approved"');
     $productStmt->execute([$productId]);
     if (!$productStmt->fetch()) {
         return;
@@ -61,7 +61,7 @@ function get_wishlist_items(int $userId): array
          JOIN products p ON p.id = wi.product_id
          JOIN categories c ON c.id = p.category_id
          JOIN users u ON u.id = p.farmer_id
-         WHERE w.user_id = ?
+         WHERE w.user_id = ? AND p.status = "active" AND p.product_status = "approved"
          ORDER BY wi.id DESC'
     );
     $stmt->execute([$userId]);

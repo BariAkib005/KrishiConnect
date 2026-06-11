@@ -149,6 +149,7 @@ $errorMessages = [
             </div>
 
             <form method="post" action="<?= url('app/actions/product_create.php'); ?>" enctype="multipart/form-data" class="produce-form">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token('product_create'), ENT_QUOTES); ?>">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name">Produce Name</label>
@@ -240,7 +241,7 @@ $errorMessages = [
                             <td><?= htmlspecialchars($product['category_name']); ?></td>
                             <td><?= number_format((float)$product['quantity_available'], 2); ?> <?= htmlspecialchars($product['unit']); ?></td>
                             <td>BDT <?= number_format((float)$product['price'], 2); ?>/<?= htmlspecialchars($product['unit']); ?></td>
-                            <td><span class="badge-status <?= $product['status'] === 'active' ? 'badge-success' : 'badge-warning'; ?>"><?= htmlspecialchars(ucwords(str_replace('_', ' ', $product['status']))); ?></span></td>
+                            <td><span class="badge-status <?= $product['product_status'] === 'approved' ? 'badge-success' : 'badge-warning'; ?>"><?= htmlspecialchars(ucwords(str_replace('_', ' ', $product['product_status']))); ?></span></td>
                             <td><a href="<?= url('pages/product.php?id=' . (int)$product['id']); ?>" class="btn btn-outline btn-sm">View</a></td>
                         </tr>
                     <?php endforeach; ?>

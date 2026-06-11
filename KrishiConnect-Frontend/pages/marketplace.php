@@ -14,7 +14,7 @@ $sql = 'SELECT p.*, c.name AS category_name,
         (SELECT image_path FROM product_images WHERE product_id = p.id AND is_primary = 1 LIMIT 1) AS image_path
         FROM products p
         JOIN categories c ON c.id = p.category_id
-        WHERE p.status = "active"';
+        WHERE p.status = "active" AND p.product_status = "approved"';
 $params = [];
 
 if ($search !== '') {

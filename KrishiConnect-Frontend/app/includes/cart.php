@@ -59,7 +59,7 @@ function add_to_cart(int $userId, int $productId, float $qty = 1): void
     $pdo = db();
     $cartId = get_or_create_cart_id($userId);
 
-    $productStmt = $pdo->prepare('SELECT price, quantity_available FROM products WHERE id = ? AND status = "active"');
+    $productStmt = $pdo->prepare('SELECT price, quantity_available FROM products WHERE id = ? AND status = "active" AND product_status = "approved"');
     $productStmt->execute([$productId]);
     $product = $productStmt->fetch();
     if (!$product) {

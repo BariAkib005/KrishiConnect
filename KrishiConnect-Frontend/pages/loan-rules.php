@@ -1,0 +1,69 @@
+<?php
+require_once __DIR__ . '/../app/includes/auth.php';
+require_once __DIR__ . '/../app/includes/helpers.php';
+
+$user = require_role('farmer');
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Rules - KrishiConnect</title>
+    <link rel="stylesheet" href="<?= asset_url('css/styles.css'); ?>">
+</head>
+<body>
+<?php require __DIR__ . '/../app/includes/header.php'; ?>
+
+<section class="section">
+    <div class="container" style="max-width:900px;margin:0 auto">
+        <a href="loan-application.php" class="btn btn-outline-secondary btn-sm mb-3">&larr; Back to Loan Application</a>
+
+        <div class="section-header">
+            <h2>KrishiConnect Microfinance - Loan Eligibility Rules</h2>
+            <p class="mb-4">The table below shows the eligible loan ranges according to the farmer's declared monthly income.</p>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Monthly Income (BDT)</th>
+                        <th>Minimum Loan (BDT)</th>
+                        <th>Maximum Loan (BDT)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Less than 25,000</td>
+                        <td>5,000</td>
+                        <td>30,000</td>
+                    </tr>
+                    <tr>
+                        <td>25,000 to 50,000</td>
+                        <td>5,000</td>
+                        <td>50,000</td>
+                    </tr>
+                    <tr>
+                        <td>50,001 to 100,000</td>
+                        <td>50,000</td>
+                        <td>100,000</td>
+                    </tr>
+                    <tr>
+                        <td>Greater than 100,000</td>
+                        <td>50,000</td>
+                        <td>150,000 (Absolute Maximum Cap)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-4">
+            <a href="loan-application.php" class="btn btn-outline-secondary btn-sm">&larr; Back to Loan Application</a>
+        </div>
+    </div>
+</section>
+
+<?php require __DIR__ . '/../app/includes/footer.php'; ?>
+</body>
+</html>

@@ -10,7 +10,7 @@ return [
         // db.php auto-detects the port anyway (it also tries 3306/3307), so
         // this is just the first port tried. 3307 matches this machine's XAMPP.
         'port' => getenv('KRISHI_DB_PORT') ?: '3307',
-        'name' => getenv('KRISHI_DB_NAME') ?: 'krishiconnect',
+        'name' => getenv('KRISHI_DB_NAME') ?: 'krishiconnect_db',
         'user' => getenv('KRISHI_DB_USER') ?: 'root',
         'pass' => getenv('KRISHI_DB_PASS') ?: '',
         'charset' => getenv('KRISHI_DB_CHARSET') ?: 'utf8mb4',
