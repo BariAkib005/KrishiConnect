@@ -17,9 +17,9 @@ $summaryStmt = $pdo->query(
         l.status AS loan_status,
         u.full_name AS farmer_name,
         u.email AS farmer_email,
-        COALESCE(SUM(CASE WHEN lp.status = "paid" THEN lp.total_amount ELSE 0 END), 0) AS paid_amount,
-        COALESCE(SUM(CASE WHEN lp.status <> "paid" THEN lp.total_amount ELSE 0 END), 0) AS due_amount,
-        COALESCE(SUM(CASE WHEN lp.status = "late" THEN lp.total_amount ELSE 0 END), 0) AS overdue_amount,
+        COALESCE(SUM(CASE WHEN lp.status = "paid" THEN lp.amount ELSE 0 END), 0) AS paid_amount,
+        COALESCE(SUM(CASE WHEN lp.status <> "paid" THEN lp.amount ELSE 0 END), 0) AS due_amount,
+        COALESCE(SUM(CASE WHEN lp.status = "late" THEN lp.amount ELSE 0 END), 0) AS overdue_amount,
         MIN(CASE WHEN lp.status <> "paid" THEN lp.due_date ELSE NULL END) AS next_due_date
      FROM loans l
      JOIN users u ON u.id = l.farmer_id
@@ -176,7 +176,7 @@ foreach ($loanRows as $loan) {
                             <td><?= htmlspecialchars($payment['farmer_name']); ?></td>
                             <td>LN<?= (int)$payment['loan_id']; ?></td>
                             <td><?= date('M j, Y', strtotime($payment['due_date'])); ?></td>
-                            <td>BDT <?= number_format((float)$payment['total_amount'], 0); ?></td>
+                            <td>BDT <?= number_format((float)$payment['amount'], 0); ?></td>
                             <td><span class="badge-status <?= $payment['status'] === 'paid' ? 'badge-success' : ($payment['status'] === 'late' ? 'badge-danger' : 'badge-warning'); ?>"><?= htmlspecialchars($payment['status']); ?></span></td>
                             <td><?= $payment['paid_at'] ? date('M j, Y', strtotime($payment['paid_at'])) : '-'; ?></td>
                             <td>

@@ -62,9 +62,10 @@ $loanId = (int)$pdo->lastInsertId();
 
 for ($i = 1; $i <= $tenure; $i++) {
     $dueDate = date('Y-m-d', strtotime("+{$i} month"));
-    
-    $payStmt = $pdo->prepare('INSERT INTO loan_payments (loan_id, payment_number, principal_amount, total_amount, due_date, status) VALUES (?, ?, ?, ?, ?, "due")');
-    $payStmt->execute([$loanId, $i, $emi, $emi, $dueDate]);
+
+    // Insert according to current schema: loan_payments has (loan_id, amount, due_date, paid_at, status)
+    $payStmt = $pdo->prepare('INSERT INTO loan_payments (loan_id, amount, due_date, status) VALUES (?, ?, ?, "due")');
+    $payStmt->execute([$loanId, $emi, $dueDate]);
 }
 
 $upd = $pdo->prepare('UPDATE loan_applications SET status = "approved", reviewed_by = ? WHERE id = ?');
