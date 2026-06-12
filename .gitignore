@@ -1,6 +1,21 @@
-# Local storage/session files
-KrishiConnect-Frontend/app/storage/sessions/
+# PHP runtime session files (regenerated automatically on first request)
+/app/storage/sessions/*
+!/app/storage/sessions/.gitkeep
 
-# OS artifacts
+# Dependency / build artifacts
+/vendor/
+/node_modules/
+
+# Environment overrides (KRISHI_DB_*, SSLCZ_* are read from the real env)
+.env
+.env.*
+
+# Editor / OS noise
+.vscode/
+.idea/
+*.swp
 Thumbs.db
 .DS_Store
+
+# Logs
+*.log
