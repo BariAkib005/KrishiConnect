@@ -31,7 +31,7 @@ $val = static fn(string $key): string => htmlspecialchars((string)($profile[$key
 <body>
 
 <div class="dashboard-layout">
-    <?php $active = 'profile'; require __DIR__ . '/../app/includes/farmer_sidebar.php'; ?>
+    <?php $active = 'settings'; require __DIR__ . '/../app/includes/farmer_sidebar.php'; ?>
 
     <main class="main-content">
         <div class="dash-header">

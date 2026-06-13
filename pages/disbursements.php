@@ -64,22 +64,7 @@ foreach ($loanRows as $loan) {
 <body>
 
 <div class="dashboard-layout">
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <a href="<?= url('index.php'); ?>" class="logo">
-                <span class="brand-mark"><i class="fas fa-seedling"></i></span>
-                <span>KrishiConnect</span>
-            </a>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="<?= url('pages/finance-dashboard.php'); ?>"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <a href="<?= url('pages/loan-management.php'); ?>"><i class="fas fa-file-invoice"></i> Loan Applications</a>
-            <a href="<?= url('pages/disbursements.php'); ?>" class="active"><i class="fas fa-chart-line"></i> Disbursements</a>
-            <a href="<?= url('pages/messaging.php'); ?>"><i class="fas fa-comments"></i> Messages</a>
-            <a href="<?= url('pages/settings.php'); ?>"><i class="fas fa-cog"></i> Settings</a>
-            <a href="<?= url('app/actions/logout.php'); ?>" style="margin-top:2rem;opacity:.6"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </nav>
-    </aside>
+    <?php $active = 'disbursements'; require __DIR__ . '/../app/includes/finance_sidebar.php'; ?>
 
     <main class="main-content">
         <div class="dash-header">

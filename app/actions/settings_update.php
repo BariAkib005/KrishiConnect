@@ -3,7 +3,16 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/db.php';
 
 require_login();
-require_csrf_token($_POST['csrf_token'] ?? null, 'app', 'pages/settings.php?error=csrf');
+
+// The same settings forms are reused by the role profile pages, so let the
+// caller say where to return. Whitelisted to prevent an open redirect.
+$allowedReturns = ['pages/settings.php', 'pages/buyer_profile.php', 'pages/finance_profile.php'];
+$returnTo = $_POST['return_to'] ?? 'pages/settings.php';
+if (!in_array($returnTo, $allowedReturns, true)) {
+    $returnTo = 'pages/settings.php';
+}
+
+require_csrf_token($_POST['csrf_token'] ?? null, 'app', $returnTo . '?error=csrf');
 $user = current_user();
 $action = trim($_POST['action'] ?? '');
 $pdo = db();
@@ -39,7 +48,7 @@ if ($action === 'profile') {
     $extra = trim($_POST['extra'] ?? '');
 
     if ($fullName === '') {
-        redirect('pages/settings.php?error=profile#profile');
+        redirect($returnTo . '?error=profile#profile');
     }
 
     $stmt = $pdo->prepare('UPDATE users SET full_name = ?, phone = ? WHERE id = ?');
@@ -68,7 +77,7 @@ if ($action === 'profile') {
         $profile->execute([(int)$user['id'], $extra, $address]);
     }
 
-    redirect('pages/settings.php?saved=profile#profile');
+    redirect($returnTo . '?saved=profile#profile');
 }
 
 if ($action === 'password') {
@@ -81,14 +90,14 @@ if ($action === 'password') {
     $row = $stmt->fetch();
 
     if (!$row || !password_verify($current, $row['password_hash']) || strlen($new) < 8 || $new !== $confirm) {
-        redirect('pages/settings.php?error=password#security');
+        redirect($returnTo . '?error=password#security');
     }
 
     $hash = password_hash($new, PASSWORD_DEFAULT);
     $upd = $pdo->prepare('UPDATE users SET password_hash = ? WHERE id = ?');
     $upd->execute([$hash, (int)$user['id']]);
 
-    redirect('pages/settings.php?saved=password#security');
+    redirect($returnTo . '?saved=password#security');
 }
 
 if ($action === 'preferences') {
@@ -108,7 +117,7 @@ if ($action === 'preferences') {
         trim($_POST['language'] ?? 'English'),
         trim($_POST['region'] ?? 'Bangladesh'),
     ]);
-    redirect('pages/settings.php?saved=preferences#preferences');
+    redirect($returnTo . '?saved=preferences#preferences');
 }
 
 if ($action === 'payment') {
@@ -122,7 +131,7 @@ if ($action === 'payment') {
         trim($_POST['payment_method'] ?? 'bKash'),
         trim($_POST['payment_account'] ?? ''),
     ]);
-    redirect('pages/settings.php?saved=payment#payment');
+    redirect($returnTo . '?saved=payment#payment');
 }
 
-redirect('pages/settings.php');
+redirect($returnTo);

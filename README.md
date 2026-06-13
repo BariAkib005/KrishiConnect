@@ -2,6 +2,51 @@
 
 A PHP + MySQL platform connecting farmers, buyers, and finance providers.
 
+## Tech Stack
+
+**Backend**
+
+- **PHP 8.1+** — no framework; a small custom structure (`pages/` views,
+  `app/actions/` request handlers, `app/includes/` shared library).
+- **PDO** (MySQL driver) with **prepared statements** for all database access.
+- No Composer / third-party PHP packages — standard library only.
+
+**Database**
+
+- **MySQL / MariaDB** (InnoDB, `utf8mb4`).
+- Schema + seed data in `app/sql/`, created automatically on first run, with
+  idempotent migrations in `app/includes/db.php`.
+- Uses foreign keys, transactions, a JSON column, and `INFORMATION_SCHEMA`
+  introspection.
+
+**Frontend**
+
+- Server-rendered HTML (PHP templates) — no SPA framework and no build step.
+- Hand-written CSS (`css/styles.css`) using custom properties, Flexbox, Grid,
+  and responsive media queries.
+- **Vanilla JavaScript** (small inline scripts; no jQuery/React/Vue).
+- **Font Awesome 6.5.1** (icons) and **Google Fonts** (Inter, DM Sans) via CDN.
+- **Bootstrap 5.3.3** (CDN) — used only on the Admin PIN login page.
+
+**Security**
+
+- Hardened PHP sessions (custom save path, HttpOnly/SameSite cookies, ID
+  regeneration).
+- `password_hash`/`password_verify` (bcrypt) for passwords and the admin PIN.
+- CSRF tokens (`random_bytes` + `hash_equals`) on all state-changing forms.
+- Role-based access control and prepared statements throughout.
+
+**Payments**
+
+- **SSLCommerz** payment gateway (sandbox by default), integrated server-side
+  via PHP **cURL** (`app/includes/sslcommerz.php`).
+
+**Tooling / Dev environment**
+
+- **XAMPP** (Apache + MySQL) or the PHP built-in dev server.
+- `run.py` — optional **Python 3** launcher for the dev server.
+- **Git** for version control.
+
 ## Requirements
 
 - **XAMPP** (or any PHP 8.1+ and MySQL/MariaDB). PHP is auto-detected from
@@ -38,8 +83,7 @@ Sign in at <http://localhost:8000/pages/login.php>.
 | Farmer | farmer@krishiconnect.test | password123 |
 | Buyer  | buyer@krishiconnect.test  | password123 |
 
-A second set of ready-to-use accounts (shown on the login page) shares the
-password `12345678`:
+A second set of ready-to-use accounts shares the password `12345678`:
 
 | Role            | Email                      |
 | --------------- | -------------------------- |

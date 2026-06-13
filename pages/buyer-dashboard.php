@@ -61,25 +61,7 @@ $recentOrders = $recentOrdersStmt->fetchAll();
 <body>
 
 <div class="dashboard-layout">
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <a href="<?= url('index.php'); ?>" class="logo">
-                <span class="brand-mark"><i class="fas fa-seedling"></i></span>
-                <span>KrishiConnect</span>
-            </a>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="<?= url('pages/buyer-dashboard.php'); ?>" class="active"><i class="fas fa-home"></i> Dashboard</a>
-            <a href="<?= url('pages/settings.php#profile'); ?>"><i class="fas fa-user"></i> My Profile</a>
-            <a href="<?= url('pages/marketplace.php'); ?>"><i class="fas fa-store"></i> Marketplace</a>
-            <a href="<?= url('pages/cart.php'); ?>"><i class="fas fa-shopping-cart"></i> Shopping Cart</a>
-            <a href="<?= url('pages/order_history.php'); ?>"><i class="fas fa-history"></i> Order History</a>
-            <a href="<?= url('pages/wishlist.php'); ?>"><i class="fas fa-heart"></i> Wishlist</a>
-            <a href="<?= url('pages/messaging.php'); ?>"><i class="fas fa-comments"></i> Messages</a>
-            <a href="<?= url('pages/settings.php'); ?>"><i class="fas fa-cog"></i> Settings</a>
-            <a href="<?= url('app/actions/logout.php'); ?>" style="margin-top:2rem;opacity:.6"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </nav>
-    </aside>
+    <?php $active = 'dashboard'; require __DIR__ . '/../app/includes/buyer_sidebar.php'; ?>
 
     <main class="main-content">
         <div class="dash-header">

@@ -54,36 +54,8 @@ $notice = $_GET['notice'] ?? '';
                 <p>New here? <a href="<?= url('pages/register.php'); ?>">Create an account</a></p>
                 <p><a href="<?= url('pages/admin_login.php'); ?>">Admin PIN login</a></p>
             </div>
-
-            <!-- Demo credentials for quick testing -->
-            <div class="alert alert-info demo-card" role="note">
-                <div class="demo-card-title">
-                    <i class="fas fa-key"></i>
-                    <span>Quick Demo Login (For Testing Only)</span>
-                </div>
-                <p class="demo-card-pw">Universal Password: <code>12345678</code></p>
-                <ul class="demo-card-list">
-                    <li><i class="fas fa-seedling"></i> <strong>Farmer:</strong> <code>farmer1@krishiconnect.com</code></li>
-                    <li><i class="fas fa-store"></i> <strong>Buyer:</strong> <code>buyer1@krishiconnect.com</code></li>
-                    <li><i class="fas fa-hand-holding-usd"></i> <strong>Finance Officer:</strong> <code>finance1@krishiconnect.com</code></li>
-                </ul>
-            </div>
         </div>
     </section>
 </main>
-
-<style>
-    .demo-card{
-        margin-top:1.5rem;padding:1rem 1.25rem;border-radius:12px;
-        background:#eef6ff;border:1px solid #c7e0fb;color:#0b3d66;
-        font-size:.9rem;line-height:1.5;
-    }
-    .demo-card-title{display:flex;align-items:center;gap:8px;font-weight:700;margin-bottom:.5rem}
-    .demo-card-title i{color:#1a6b4a}
-    .demo-card-pw{margin:0 0 .6rem}
-    .demo-card code{background:rgba(0,0,0,.06);padding:.1rem .4rem;border-radius:6px;font-size:.85rem;font-weight:600}
-    .demo-card-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.4rem}
-    .demo-card-list i{color:#1a6b4a;width:16px;text-align:center}
-</style>
 </body>
 </html>

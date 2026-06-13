@@ -12,7 +12,6 @@ $active = $active ?? '';
     </div>
     <nav class="sidebar-nav">
         <a href="<?= url('pages/dashboard.php'); ?>" class="<?= $active === 'dashboard' ? 'active' : ''; ?>"><i class="fas fa-home"></i> Dashboard</a>
-        <a href="<?= url('pages/farmer_profile.php'); ?>" class="<?= $active === 'profile' ? 'active' : ''; ?>"><i class="fas fa-user"></i> My Profile</a>
         <a href="<?= url('pages/manage_products.php#add'); ?>" class="<?= $active === 'list-produce' ? 'active' : ''; ?>"><i class="fas fa-plus-circle"></i> List Produce</a>
         <a href="<?= url('pages/manage_products.php'); ?>" class="<?= $active === 'inventory' ? 'active' : ''; ?>"><i class="fas fa-warehouse"></i> Inventory</a>
         <a href="<?= url('pages/order_history.php'); ?>" class="<?= $active === 'sales' ? 'active' : ''; ?>"><i class="fas fa-chart-line"></i> Sales</a>
