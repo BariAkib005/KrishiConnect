@@ -130,76 +130,43 @@ $user = require_role('farmer');
 </section>
 
 <script>
-(function(){
-    const incomeInput = document.getElementById('monthly_income');
+(function () {
     const loanInput = document.getElementById('loan_amount');
-    const submitBtn = document.querySelector('button[type="submit"]');
-    let allowedMin = 0, allowedMax = 0;
+    const rangeEl = document.getElementById('loanRangeMsg');
+    const errEl = document.getElementById('loanErrorMsg');
+    if (!loanInput) return;
 
     // Single source of truth, injected from PHP (loan_amount_bounds()).
     const LOAN_MIN = <?= (int)$loanMin; ?>, LOAN_MAX = <?= (int)$loanMax; ?>;
 
-    function parseIncome(v){
-        if(!v) return 0;
-        const digits = v.replace(/[^\d]/g,'');
-        return parseInt(digits||'0',10);
-    }
-    function computeRange(income){
-        // Every farmer may request between the minimum and BDT 1,50,000.
-        return [LOAN_MIN, LOAN_MAX];
-    }
-    function updateRangeMsg(){
-        const raw = (incomeInput && incomeInput.value || '').trim();
-        const msgEl = document.getElementById('loanRangeMsg');
-        const errEl = document.getElementById('loanErrorMsg');
-        if(!raw){
-            // require income first
-            if(msgEl) msgEl.textContent = 'Please enter your monthly income first.';
-            if(errEl) errEl.textContent = '';
-            if(loanInput) loanInput.style.borderColor = 'red';
-            if(submitBtn) submitBtn.disabled = true;
-            allowedMin = 0; allowedMax = 0;
-            return;
-        }
-        const income = parseIncome(raw);
-        [allowedMin, allowedMax] = computeRange(income);
-        if(msgEl) msgEl.textContent = `Allowed: BDT ${allowedMin.toLocaleString()} to ${allowedMax.toLocaleString()}`;
-        validateLoan();
-    }
-    function validateLoan(){
-        const msgEl = document.getElementById('loanErrorMsg');
-        if(!loanInput) return;
-        // if monthly income not provided, force user to fill it first
-        if(allowedMax === 0){
-            if(loanInput.value) loanInput.style.borderColor = 'red';
-            if(msgEl) msgEl.textContent = 'Please enter your monthly income before entering loan amount.';
-            if(submitBtn) submitBtn.disabled = true;
-            return;
-        }
-        const val = Number(loanInput.value || 0);
-        if(!loanInput.value){
-            loanInput.style.borderColor = '';
-            if(msgEl) msgEl.textContent = '';
-            if(submitBtn) submitBtn.disabled = false;
-            return;
-        }
-        if(val < allowedMin || val > allowedMax){
-            loanInput.style.borderColor = 'red';
-            if(msgEl) msgEl.textContent = `Invalid amount — you may request BDT ${allowedMin.toLocaleString()} to ${allowedMax.toLocaleString()}.`;
-            if(submitBtn) submitBtn.disabled = true;
-        } else {
-            loanInput.style.borderColor = '';
-            if(msgEl) msgEl.textContent = '';
-            if(submitBtn) submitBtn.disabled = false;
-        }
+    // Neutral helper text — shown without any error styling.
+    if (rangeEl) {
+        rangeEl.textContent = `Allowed: BDT ${LOAN_MIN.toLocaleString()} to ${LOAN_MAX.toLocaleString()}.`;
     }
 
-    if(incomeInput) incomeInput.addEventListener('input', updateRangeMsg);
-    if(loanInput) loanInput.addEventListener('input', validateLoan);
-    // initialize on load
-    if(document.readyState === 'loading'){
-        document.addEventListener('DOMContentLoaded', updateRangeMsg);
-    } else { updateRangeMsg(); }
+    function validateLoan() {
+        const raw = loanInput.value.trim();
+
+        // Empty field stays neutral — no red before the user types anything.
+        if (raw === '') {
+            loanInput.style.borderColor = '';
+            if (errEl) errEl.textContent = '';
+            return;
+        }
+
+        const val = Number(raw);
+        let error = '';
+        if (val < 0) {
+            error = 'Loan amount cannot be negative.';
+        } else if (val > LOAN_MAX) {
+            error = `Maximum loan amount is BDT ${LOAN_MAX.toLocaleString()}.`;
+        }
+
+        loanInput.style.borderColor = error ? 'red' : '';
+        if (errEl) errEl.textContent = error;
+    }
+
+    loanInput.addEventListener('input', validateLoan);
 })();
 </script>
 

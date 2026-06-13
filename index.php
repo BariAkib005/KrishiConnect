@@ -2,6 +2,13 @@
 $title = 'KrishiConnect - Connecting Farmers, Buyers & Finance';
 $active = 'home';
 require_once __DIR__ . '/app/includes/header.php';
+
+// Live platform metrics for the stats band — real values, not placeholders.
+$pdo = db();
+$statFarmers   = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE role = 'farmer'")->fetchColumn();
+$statBuyers    = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE role = 'buyer' AND status = 'active'")->fetchColumn();
+$statLoans     = (float)$pdo->query("SELECT COALESCE(SUM(approved_amount), 0) FROM loans WHERE status IN ('active', 'closed')")->fetchColumn();
+$statDistricts = (int)$pdo->query("SELECT COUNT(DISTINCT location) FROM farmer_profiles WHERE location IS NOT NULL AND location <> ''")->fetchColumn();
 ?>
 
 <section class="design-hero">
@@ -99,10 +106,10 @@ require_once __DIR__ . '/app/includes/header.php';
 <section class="stats-section">
     <div class="container">
         <div class="stats-grid">
-            <div class="stat-item"><h3>1,500<span>+</span></h3><p>Registered Farmers</p></div>
-            <div class="stat-item"><h3>5,000<span>+</span></h3><p>Active Buyers</p></div>
-            <div class="stat-item"><h3>BDT 30<span>M+</span></h3><p>Loans Disbursed</p></div>
-            <div class="stat-item"><h3>50<span>+</span></h3><p>Districts Covered</p></div>
+            <div class="stat-item"><h3><?= number_format($statFarmers); ?></h3><p>Registered Farmers</p></div>
+            <div class="stat-item"><h3><?= number_format($statBuyers); ?></h3><p>Active Buyers</p></div>
+            <div class="stat-item"><h3>BDT <?= number_format($statLoans); ?></h3><p>Loans Disbursed</p></div>
+            <div class="stat-item"><h3><?= number_format($statDistricts); ?></h3><p>Districts Covered</p></div>
         </div>
     </div>
 </section>
