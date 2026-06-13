@@ -7,6 +7,8 @@ require_once __DIR__ . '/../app/includes/db.php';
 
 $user = require_role('buyer');
 $name = $user['full_name'] ?? 'Buyer';
+$hour = (int)date('G');
+$greeting = $hour < 12 ? 'Good morning' : ($hour < 17 ? 'Good afternoon' : 'Good evening');
 $cartItems = get_cart_items((int)$user['id']);
 $wishlistTotal = wishlist_count((int)$user['id']);
 $unreadStmt = db()->prepare(
@@ -65,8 +67,8 @@ $recentOrders = $recentOrdersStmt->fetchAll();
 
     <main class="main-content">
         <div class="dash-header">
-            <div><h1>Good morning, <?= htmlspecialchars($name); ?></h1><p>Fresh harvests from verified farmers, delivered to your door.</p></div>
-            <div class="meta"><i class="fas fa-clock"></i> Last login: Today at 10:15 AM</div>
+            <div><h1><?= $greeting; ?>, <?= htmlspecialchars($name); ?></h1><p>Fresh harvests from verified farmers, delivered to your door.</p></div>
+            <div class="meta"><i class="fas fa-clock"></i> <?= date('l, M j, Y'); ?></div>
         </div>
 
         <div class="dash-cards">

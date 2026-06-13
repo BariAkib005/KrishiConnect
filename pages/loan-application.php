@@ -56,17 +56,17 @@ $user = require_role('farmer');
                     <div class="form-group"><label>Email</label><input type="text" value="<?= htmlspecialchars($user['email'] ?? ''); ?>" readonly></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Phone Number</label><input type="text" name="phone" placeholder="Enter phone number" required></div>
+                    <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" inputmode="numeric" pattern="01[3-9]\d{8}" maxlength="11" title="Enter an 11-digit Bangladeshi mobile number, e.g. 01712345678" placeholder="e.g., 01712345678" required></div>
                     <div class="form-group"><label>District</label><input type="text" name="location" placeholder="Enter district" required></div>
                 </div>
 
                 <h3 class="form-section-title"><i class="fas fa-university" style="color:var(--emerald);margin-right:8px"></i> Banking Information</h3>
                 <div class="form-row">
-                    <div class="form-group"><label>Account Number</label><input type="text" name="bank_account" placeholder="Enter account number" required></div>
-                    <div class="form-group"><label>Bank Name</label><input type="text" name="bank_name" placeholder="Enter bank name" required></div>
+                    <div class="form-group"><label>Account Number</label><input type="text" name="bank_account" inputmode="numeric" pattern="[0-9]{6,20}" title="Account number must contain digits only (6-20 digits)" placeholder="Digits only" required></div>
+                    <div class="form-group"><label>Bank Name</label><input type="text" name="bank_name" pattern="[A-Za-z .]{2,60}" title="Bank name must contain letters only" placeholder="Enter bank name" required></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Branch</label><input type="text" name="bank_branch" placeholder="Enter branch name"></div>
+                    <div class="form-group"><label>Branch</label><input type="text" name="bank_branch" pattern="[A-Za-z .]{2,60}" title="Branch name must contain letters only" placeholder="Enter branch name"></div>
                     <div class="form-group"><label>Farm Size</label><input type="text" name="farm_size" placeholder="e.g., 5 acres" required></div>
                 </div>
 

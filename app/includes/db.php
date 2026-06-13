@@ -238,7 +238,42 @@ function db_ensure_demo_data(PDO $pdo): void
     db_ensure_payment_columns($pdo);
     db_seed_demo_users($pdo);
     db_seed_sample_products($pdo);
+    db_seed_market_prices($pdo);
     db_ensure_demo_accounts($pdo);
+}
+
+/**
+ * Seed a small market-price reference table (real-looking Bangladeshi wholesale
+ * rates across districts). Used by the Smart Agri "Market Price Watch" and the
+ * homepage "Markets tracked" metric. Idempotent — skipped once populated.
+ */
+function db_seed_market_prices(PDO $pdo): void
+{
+    if ((int)$pdo->query('SELECT COUNT(*) FROM market_prices')->fetchColumn() > 0) {
+        return;
+    }
+
+    // [crop, region, unit, price, previous_price]
+    $rows = [
+        ['Potato', 'Munshiganj', 'kg', 28, 25],
+        ['Onion', 'Pabna', 'kg', 90, 85],
+        ['Rice (Miniket)', 'Naogaon', 'kg', 72, 72],
+        ['Coarse Rice', 'Dinajpur', 'kg', 52, 55],
+        ['Tomato', 'Gazipur', 'kg', 60, 70],
+        ['Green Chili', 'Bogura', 'kg', 120, 100],
+        ['Lentil (Masoor)', 'Faridpur', 'kg', 130, 128],
+        ['Brinjal', 'Jashore', 'kg', 45, 50],
+        ['Garlic', 'Natore', 'kg', 200, 210],
+        ['Ginger', 'Sylhet', 'kg', 220, 200],
+    ];
+
+    $insert = $pdo->prepare(
+        'INSERT INTO market_prices (crop_name, region, unit, price, previous_price, reported_on)
+         VALUES (?, ?, ?, ?, ?, CURDATE())'
+    );
+    foreach ($rows as [$crop, $region, $unit, $price, $prev]) {
+        $insert->execute([$crop, $region, $unit, $price, $prev]);
+    }
 }
 
 /**
@@ -322,6 +357,12 @@ function db_ensure_payment_columns(PDO $pdo): void
 {
     if (!db_column_exists($pdo, 'orders', 'tran_id')) {
         $pdo->exec('ALTER TABLE orders ADD COLUMN tran_id VARCHAR(64) DEFAULT NULL');
+    }
+
+    // Per-installment gateway transaction id, used to correlate SSLCommerz loan
+    // repayment callbacks back to the loan_payments row.
+    if (!db_column_exists($pdo, 'loan_payments', 'tran_id')) {
+        $pdo->exec('ALTER TABLE loan_payments ADD COLUMN tran_id VARCHAR(64) DEFAULT NULL');
     }
 }
 

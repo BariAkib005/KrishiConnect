@@ -67,7 +67,7 @@ $pendingApps = $pdo->query(
         <div class="table-wrap">
             <h2><i class="fas fa-file-invoice" style="color:var(--emerald);margin-right:8px"></i> Applications Queue</h2>
             <table>
-                <thead><tr><th>ID</th><th>Farmer</th><th>Amount</th><th>Purpose</th><th>Risk</th><th>Score</th><th>Action</th></tr></thead>
+                <thead><tr><th>ID</th><th>Farmer</th><th>Amount</th><th>Purpose</th><th>Risk</th><th>Action</th></tr></thead>
                 <tbody>
                     <?php if (!$pendingApps): ?>
                         <tr><td colspan="7" class="empty-cell">No pending loan applications.</td></tr>
@@ -79,7 +79,6 @@ $pendingApps = $pdo->query(
                             <td>BDT <?= number_format((float)$app['requested_amount'], 0); ?></td>
                             <td><?= htmlspecialchars($app['purpose']); ?></td>
                             <td><span class="badge-status <?= $app['risk_level'] === 'high' ? 'badge-danger' : ($app['risk_level'] === 'low' ? 'badge-success' : 'badge-warning'); ?>"><?= htmlspecialchars($app['risk_level']); ?></span></td>
-                            <td><?= $app['risk_level'] === 'low' ? '801' : ($app['risk_level'] === 'high' ? '542' : '654'); ?></td>
                             <td><a href="<?= url('pages/loan-management.php'); ?>" class="btn btn-primary btn-sm">Review</a></td>
                         </tr>
                     <?php endforeach; ?>

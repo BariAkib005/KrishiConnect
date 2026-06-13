@@ -70,9 +70,13 @@ $history = $historyStmt->fetchAll();
         </div>
 
         <?php if ($paid): ?>
-            <div class="notice success"><i class="fas fa-check-circle"></i> Installment repaid. Your outstanding due has been updated.</div>
+            <div class="notice success"><i class="fas fa-check-circle"></i> Installment paid successfully. Your outstanding due has been updated.</div>
+        <?php elseif ($error === 'cancelled'): ?>
+            <div class="notice error"><i class="fas fa-circle-exclamation"></i> Payment cancelled — your installment was not charged.</div>
+        <?php elseif ($error === 'gateway'): ?>
+            <div class="notice error"><i class="fas fa-circle-exclamation"></i> Could not reach the payment gateway. Please try again.</div>
         <?php elseif ($error !== ''): ?>
-            <div class="notice error"><i class="fas fa-circle-exclamation"></i> Could not process that repayment. Please try again.</div>
+            <div class="notice error"><i class="fas fa-circle-exclamation"></i> Could not process that payment. Please try again.</div>
         <?php endif; ?>
 
         <!-- Due + eligibility summary -->
@@ -135,10 +139,9 @@ $history = $historyStmt->fetchAll();
                                 <td><?= $pay['paid_at'] ? date('M j, Y', strtotime($pay['paid_at'])) : '-'; ?></td>
                                 <td>
                                     <?php if ($pay['status'] !== 'paid' && (int)$pay['id'] === $nextDueId): ?>
-                                        <form method="post" action="<?= url('app/actions/loan_repay.php'); ?>">
-                                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token('loan_repay'), ENT_QUOTES); ?>">
+                                        <form method="post" action="<?= url('app/actions/loan_pay.php'); ?>"><?= csrf_field('app'); ?>
                                             <input type="hidden" name="payment_id" value="<?= (int)$pay['id']; ?>">
-                                            <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-money-bill-wave"></i> Repay</button>
+                                            <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-credit-card"></i> Pay Now</button>
                                         </form>
                                     <?php elseif ($pay['status'] === 'paid'): ?>
                                         <span class="muted"><i class="fas fa-check"></i> Settled</span>

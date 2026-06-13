@@ -9,6 +9,30 @@ $statFarmers   = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE role = 'farm
 $statBuyers    = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE role = 'buyer' AND status = 'active'")->fetchColumn();
 $statLoans     = (float)$pdo->query("SELECT COALESCE(SUM(approved_amount), 0) FROM loans WHERE status IN ('active', 'closed')")->fetchColumn();
 $statDistricts = (int)$pdo->query("SELECT COUNT(DISTINCT location) FROM farmer_profiles WHERE location IS NOT NULL AND location <> ''")->fetchColumn();
+$statMarkets   = (int)$pdo->query("SELECT COUNT(DISTINCT region) FROM market_prices")->fetchColumn();
+
+// On-time repayment rate: of settled installments (paid or late), the share
+// paid on or before their due date. Defaults to 100% when nothing is settled.
+$repay = $pdo->query(
+    "SELECT
+        COALESCE(SUM(status = 'paid'), 0) AS paid,
+        COALESCE(SUM(status = 'late'), 0) AS late,
+        COALESCE(SUM(status = 'paid' AND paid_at IS NOT NULL AND paid_at <= due_date), 0) AS on_time
+     FROM loan_payments"
+)->fetch();
+$settled = (int)$repay['paid'] + (int)$repay['late'];
+$statOnTime = $settled > 0 ? (int)round(100 * (int)$repay['on_time'] / $settled) : 100;
+
+// Real featured listings for the homepage produce grid.
+$featuredProducts = $pdo->query(
+    "SELECT p.id, p.name, p.local_name, p.price, p.unit, p.rating, p.is_organic, p.image_url, c.name AS category_name,
+            (SELECT image_path FROM product_images WHERE product_id = p.id AND is_primary = 1 LIMIT 1) AS image_path
+     FROM products p
+     JOIN categories c ON c.id = p.category_id
+     WHERE p.status = 'active' AND p.product_status = 'approved'
+     ORDER BY p.is_featured DESC, p.rating DESC, p.created_at DESC
+     LIMIT 4"
+)->fetchAll();
 ?>
 
 <section class="design-hero">
@@ -24,10 +48,10 @@ $statDistricts = (int)$pdo->query("SELECT COUNT(DISTINCT location) FROM farmer_p
         </div>
         <div class="hero-stats-card">
             <div class="hero-stats-grid">
-                <div><strong>12,400+</strong><span>Farmers onboarded</span></div>
-                <div><strong>BDT 48 Cr</strong><span>Disbursed in loans</span></div>
-                <div><strong>320+</strong><span>Markets tracked</span></div>
-                <div><strong>98%</strong><span>On-time repayment</span></div>
+                <div><strong><?= number_format($statFarmers); ?></strong><span>Farmers onboarded</span></div>
+                <div><strong>BDT <?= number_format($statLoans); ?></strong><span>Disbursed in loans</span></div>
+                <div><strong><?= number_format($statMarkets); ?></strong><span>Markets tracked</span></div>
+                <div><strong><?= $statOnTime; ?>%</strong><span>On-time repayment</span></div>
             </div>
             <div class="logistics-chip"><i class="fas fa-truck"></i> Logistics partners in all 8 divisions</div>
         </div>
@@ -72,29 +96,24 @@ $statDistricts = (int)$pdo->query("SELECT COUNT(DISTINCT location) FROM farmer_p
             <p>Fresh produce directly from farms across Bangladesh</p>
         </div>
         <div class="product-grid">
-            <?php
-            $products = [
-                ['Brinjal (Begun)', 'Rangpur Region', 'BDT 40/kg', '4.5', 'brinjal.jpg', 'Organic'],
-                ['Tomato', 'Gazipur', 'BDT 60/kg', '4.0', 'tomato.jpg', 'Fresh'],
-                ['Potato (Alu)', 'Munshiganj', 'BDT 25/kg', '5.0', 'potato.jpg', 'Premium'],
-                ['Cauliflower', 'Bogra', 'BDT 45/pc', '4.0', 'cauliflower.jpg', 'Seasonal'],
-            ];
-            foreach ($products as $product):
-            ?>
-                <div class="product-card">
+            <?php if (!$featuredProducts): ?>
+                <div class="card" style="grid-column:1/-1;text-align:center">Fresh produce will appear here as farmers list it.</div>
+            <?php endif; ?>
+            <?php foreach ($featuredProducts as $product): ?>
+                <a class="product-card" href="<?= url('pages/product.php?id=' . (int)$product['id']); ?>" style="color:inherit">
                     <div class="img-wrap">
-                        <img src="<?= asset_url('images/vegetables/' . $product[4]); ?>" alt="<?= htmlspecialchars($product[0]); ?>">
-                        <span class="badge"><?= htmlspecialchars($product[5]); ?></span>
+                        <img src="<?= product_image_src($product); ?>" alt="<?= htmlspecialchars($product['name']); ?>">
+                        <span class="badge"><?= htmlspecialchars($product['category_name']); ?></span>
                     </div>
                     <div class="details">
-                        <h3><?= htmlspecialchars($product[0]); ?></h3>
-                        <p class="origin"><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($product[1]); ?></p>
+                        <h3><?= htmlspecialchars($product['name']); ?></h3>
+                        <p class="origin"><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($product['local_name'] ?? '') ?: 'Verified Farm'; ?></p>
                         <div class="price-row">
-                            <span class="price"><?= htmlspecialchars($product[2]); ?></span>
-                            <span class="rating"><i class="fas fa-star"></i> <?= htmlspecialchars($product[3]); ?></span>
+                            <span class="price">BDT <?= number_format((float)$product['price'], 0); ?>/<?= htmlspecialchars($product['unit']); ?></span>
+                            <span class="rating"><i class="fas fa-star"></i> <?= number_format((float)$product['rating'], 1); ?></span>
                         </div>
                     </div>
-                </div>
+                </a>
             <?php endforeach; ?>
         </div>
         <div style="text-align:center;margin-top:2.5rem">

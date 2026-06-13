@@ -17,10 +17,32 @@ $income_value = (float) preg_replace('/[^0-9\.]/', '', $raw_income);
 $collateral = trim($_POST['collateral'] ?? '');
 $bankName = trim($_POST['bank_name'] ?? '');
 $bankAccount = trim($_POST['bank_account'] ?? '');
+$phone = trim($_POST['phone'] ?? '');
+$bankBranch = trim($_POST['bank_branch'] ?? '');
 
 // Basic required fields check
 if ($amount <= 0 || $purpose === '' || $tenure <= 0) {
     $_SESSION['loan_error'] = 'Please fill out the required fields.';
+    $_SESSION['old_income'] = $_POST['monthly_income'] ?? '';
+    $_SESSION['old_amount'] = $_POST['loan_amount'] ?? '';
+    redirect('pages/loan-application.php');
+}
+
+// Field-format validation (mirrors the client-side rules; client checks can be
+// bypassed, so re-validate here). Phone = Bangladeshi mobile, account = digits
+// only, bank/branch names = letters only.
+$formatError = '';
+if ($phone !== '' && !preg_match('/^01[3-9]\d{8}$/', $phone)) {
+    $formatError = 'Please enter a valid 11-digit Bangladeshi mobile number (e.g. 01712345678).';
+} elseif ($bankAccount !== '' && !preg_match('/^[0-9]{6,20}$/', $bankAccount)) {
+    $formatError = 'Account number must contain digits only.';
+} elseif ($bankName !== '' && !preg_match('/^[A-Za-z .]{2,60}$/', $bankName)) {
+    $formatError = 'Bank name must contain letters only.';
+} elseif ($bankBranch !== '' && !preg_match('/^[A-Za-z .]{2,60}$/', $bankBranch)) {
+    $formatError = 'Branch name must contain letters only.';
+}
+if ($formatError !== '') {
+    $_SESSION['loan_error'] = $formatError;
     $_SESSION['old_income'] = $_POST['monthly_income'] ?? '';
     $_SESSION['old_amount'] = $_POST['loan_amount'] ?? '';
     redirect('pages/loan-application.php');

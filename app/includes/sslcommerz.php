@@ -137,6 +137,61 @@ function sslcommerz_record_failure(PDO $pdo, array $order, string $reason): void
     ]);
 }
 
+/* ---------------------------------------------------------------------------
+ * Loan repayment helpers.
+ *
+ * These reuse the exact same gateway transport/validation as the order flow
+ * above, but key off `loan_payments` instead of `orders`. The buyer checkout
+ * path is intentionally left untouched.
+ * ------------------------------------------------------------------------- */
+
+/**
+ * Generic server-to-server validation check: the response must be
+ * VALID/VALIDATED, for the same tran_id, in BDT, and for the expected amount.
+ */
+function sslcommerz_validation_ok(?array $validation, string $tranId, float $amount): bool
+{
+    if (!$validation) {
+        return false;
+    }
+
+    $status = $validation['status'] ?? '';
+    $amountOk = abs((float)($validation['amount'] ?? 0) - $amount) < 0.01;
+
+    return in_array($status, ['VALID', 'VALIDATED'], true)
+        && ($validation['tran_id'] ?? '') === $tranId
+        && strtoupper((string)($validation['currency'] ?? '')) === 'BDT'
+        && $amountOk;
+}
+
+/**
+ * Idempotently mark a single loan installment paid, then close the loan once
+ * every installment is settled (mirrors the direct-repay logic in
+ * loan_repay.php). Safe to call from both the success redirect and the IPN.
+ *
+ * @param array $payment Row with at least `id` and `loan_id`.
+ */
+function sslcommerz_mark_loan_payment_paid(PDO $pdo, array $payment): void
+{
+    $paymentId = (int)$payment['id'];
+    $loanId = (int)$payment['loan_id'];
+
+    $check = $pdo->prepare('SELECT status FROM loan_payments WHERE id = ?');
+    $check->execute([$paymentId]);
+    if (($check->fetch()['status'] ?? '') === 'paid') {
+        return; // already processed
+    }
+
+    $pdo->prepare('UPDATE loan_payments SET status = "paid", paid_at = ? WHERE id = ?')
+        ->execute([date('Y-m-d'), $paymentId]);
+
+    $remaining = $pdo->prepare('SELECT COUNT(*) AS c FROM loan_payments WHERE loan_id = ? AND status <> "paid"');
+    $remaining->execute([$loanId]);
+    if ((int)($remaining->fetch()['c'] ?? 0) === 0) {
+        $pdo->prepare('UPDATE loans SET status = "closed" WHERE id = ?')->execute([$loanId]);
+    }
+}
+
 /**
  * Perform a cURL request and decode the JSON body.
  *
