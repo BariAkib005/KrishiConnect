@@ -238,6 +238,79 @@ function db_ensure_demo_data(PDO $pdo): void
     db_ensure_payment_columns($pdo);
     db_seed_demo_users($pdo);
     db_seed_sample_products($pdo);
+    db_ensure_demo_accounts($pdo);
+}
+
+/**
+ * Self-healing demo logins.
+ *
+ * The accounts advertised in the README / login page are re-affirmed on every
+ * boot so a fresh clone — or a database left in a bad state — can always sign
+ * in. This specifically guards against the "works on my machine" class of bug
+ * where the seed never fully applied, or the (only) admin account ended up
+ * suspended and locked everyone out. Each account is guaranteed to:
+ *   - exist,
+ *   - be `active`,
+ *   - have the documented demo password, and
+ *   - (admin only) carry a working 6-digit PIN.
+ *
+ * Hashes are generated at runtime so there is no dependency on a pre-computed
+ * hash string. Because these are fixed demo logins, a changed password is
+ * intentionally reset back to the documented one.
+ */
+function db_ensure_demo_accounts(PDO $pdo): void
+{
+    // [email, full_name, role, password, phone]
+    $accounts = [
+        ['admin@krishiconnect.test',   'Admin User',     'admin',   'password123', '01000000000'],
+        ['farmer@krishiconnect.test',  'Rafiq Ahmed',    'farmer',  'password123', '01700000000'],
+        ['buyer@krishiconnect.test',   'Anita Rahman',   'buyer',   'password123', '01800000000'],
+        ['farmer1@krishiconnect.com',  'Rahim Uddin',    'farmer',  '12345678',    '01711000001'],
+        ['buyer1@krishiconnect.com',   'Anik Chowdhury', 'buyer',   '12345678',    '01822000001'],
+        ['finance1@krishiconnect.com', 'Tahmina Akter',  'finance', '12345678',    '01933000001'],
+    ];
+    $adminPin = '123456';
+
+    $find = $pdo->prepare('SELECT id, status, password_hash, admin_pin_hash FROM users WHERE email = ? LIMIT 1');
+    $insert = $pdo->prepare(
+        'INSERT INTO users (full_name, email, phone, role, password_hash, admin_pin_hash, status)
+         VALUES (?, ?, ?, ?, ?, ?, "active")'
+    );
+
+    foreach ($accounts as [$email, $name, $role, $password, $phone]) {
+        $isAdmin = $role === 'admin';
+        $find->execute([$email]);
+        $row = $find->fetch();
+
+        if (!$row) {
+            $insert->execute([
+                $name, $email, $phone, $role,
+                password_hash($password, PASSWORD_DEFAULT),
+                $isAdmin ? password_hash($adminPin, PASSWORD_DEFAULT) : null,
+            ]);
+            continue;
+        }
+
+        $id = (int)$row['id'];
+
+        // Re-activate a demo account that was left suspended/pending — otherwise
+        // a deactivated admin permanently locks out every administrator.
+        if ($row['status'] !== 'active') {
+            $pdo->prepare('UPDATE users SET status = "active" WHERE id = ?')->execute([$id]);
+        }
+
+        // Repair the password if it no longer matches the documented demo one.
+        if (!password_verify($password, (string)$row['password_hash'])) {
+            $pdo->prepare('UPDATE users SET password_hash = ? WHERE id = ?')
+                ->execute([password_hash($password, PASSWORD_DEFAULT), $id]);
+        }
+
+        // Guarantee the admin always has a working PIN.
+        if ($isAdmin && (empty($row['admin_pin_hash']) || !password_verify($adminPin, (string)$row['admin_pin_hash']))) {
+            $pdo->prepare('UPDATE users SET admin_pin_hash = ? WHERE id = ?')
+                ->execute([password_hash($adminPin, PASSWORD_DEFAULT), $id]);
+        }
+    }
 }
 
 /**
